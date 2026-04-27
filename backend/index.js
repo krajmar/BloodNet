@@ -102,3 +102,41 @@ app.post("/register/hospital", (req, res) => {
     }
   );
 });
+
+//Blood bank registration form fields inserting
+app.post("/register/bloodbank", (req, res) => {
+  const {
+    name,
+    region,
+    address,
+    email,
+    password,
+    phone,
+    capacity
+  } = req.body;
+
+  const sql = `
+    INSERT INTO blood_bank (
+      name, region, address, email, password, phone, capacity
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+  `;
+
+  db.query(sql,
+    [
+      name,
+      region,
+      address,
+      email,
+      password,
+      phone,
+      capacity
+    ],
+    (err, result) => {
+      if (err){
+      return res.status(500).json(err);
+      }
+      res.json({ message: "Blood bank registered successfully" });
+    }
+  );
+});
