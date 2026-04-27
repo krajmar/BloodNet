@@ -140,3 +140,53 @@ app.post("/register/bloodbank", (req, res) => {
     }
   );
 });
+
+//Login form with email and password 
+
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+
+  // 1. Check donor
+  const donorSql = "SELECT * FROM donor WHERE email = ? AND password = ?";
+  db.query(donorSql, [email, password], (err, donorResult) => {
+    if (err) return res.status(500).json(err);
+
+    if (donorResult.length > 0) {
+      return res.json({
+        role: "donor",
+        user: donorResult[0]
+      });
+    }
+
+    // 2. Check hospital
+    const hospitalSql = "SELECT * FROM hospital WHERE email = ? AND password = ?";
+    db.query(hospitalSql, [email, password], (err2, hospitalResult) => {
+      if (err2) return res.status(500).json(err2);
+
+      if (hospitalResult.length > 0) {
+        return res.json({
+          role: "hospital",
+          user: hospitalResult[0]
+        });
+      }
+
+      // 3. Check blood bank
+      const bloodSql = "SELECT * FROM blood_bank WHERE email = ? AND password = ?";
+      db.query(bloodSql, [email, password], (err3, bloodResult) => {
+        if (err3) return res.status(500).json(err3);
+
+        if (bloodResult.length > 0) {
+          return res.json({
+            role: "blood_bank",
+            user: bloodResult[0]
+          });
+        }
+
+        // 4. No match
+        return res.status(401).json({
+          message: "Invalid email or password"
+        });
+      });
+    });
+  });
+});

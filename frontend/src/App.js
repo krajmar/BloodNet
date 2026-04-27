@@ -6,6 +6,9 @@ import RegisterRole from "./pages/RegisterRole";
 import RegisterDonor from "./pages/RegisterDonor";
 import RegisterHospital from "./pages/RegisterHospital";
 import RegisterBloodBank from "./pages/RegisterBloodBank";
+import DonorDashboard from "./pages/DonorDashboard";
+import HospitalDashboard from "./pages/HospitalDashboard";
+import BloodBankDashboard from "./pages/BloodBankDashboard"
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
         <Route path="/register/donor" element={<RegisterDonor />} />
         <Route path="/register/hospital" element={<RegisterHospital />} />
         <Route path="/register/bloodbank" element={<RegisterBloodBank />} />
+        <Route path="/donor/dashboard" element={<DonorDashboard />} />
+        <Route path="/hospital/dashboard" element={<HospitalDashboard />} />
+        <Route path="/blood_bank/dashboard" element={<BloodBankDashboard />} />
       </Routes>
     </Router>
   );
