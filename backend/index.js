@@ -66,3 +66,39 @@ app.post("/register/donor", (req, res) => {
     }
   );
 });
+
+//Hospital registration form fields inserting
+app.post("/register/hospital", (req, res) => {
+  const {
+    name,
+    region,
+    address,
+    email,
+    password,
+    phone
+  } = req.body;
+
+  const sql = `
+    INSERT INTO hospital (
+      name, region, address, email, password, phone
+    )
+    VALUES (?, ?, ?, ?, ?, ?)
+  `;
+
+  db.query(sql,
+    [
+      name,
+      region,
+      address,
+      email,
+      password,
+      phone
+    ],
+    (err, result) => {
+      if (err){
+      return res.status(500).json(err);
+      }
+      res.json({ message: "Hospital registered successfully" });
+    }
+  );
+});
