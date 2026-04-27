@@ -21,3 +21,48 @@ app.get("/test-db", (req, res) => {
     res.send("Database connected successfully!");
   });
 });
+
+
+//Donor registration form fields inserting
+app.post("/register/donor", (req, res) => {
+  const {
+    name,
+    date_of_birth,
+    age,
+    sex,
+    blood_type,
+    region,
+    email,
+    password,
+    phone
+  } = req.body;
+
+  const sql = `
+    INSERT INTO donor (
+      name, date_of_birth, age, sex,
+      blood_type, region, email, password, phone,
+      last_donation_date, total_donations
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, 0)
+  `;
+
+  db.query(sql,
+    [
+      name,
+      date_of_birth,
+      age,
+      sex,
+      blood_type,
+      region,
+      email,
+      password,
+      phone
+    ],
+    (err, result) => {
+      if (err){
+      return res.status(500).json(err);
+      }
+      res.json({ message: "Donor registered successfully" });
+    }
+  );
+});
