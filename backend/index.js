@@ -190,3 +190,15 @@ app.post("/login", (req, res) => {
     });
   });
 });
+
+//Getting the number of active requests within the same region as the donor
+app.get("/requests/count/:region", (req, res) => {
+  const { region } = req.params;
+  const sql = `SELECT COUNT(*) AS count FROM blood_request WHERE region = ? AND status = 'Sent'`;
+
+  db.query(sql,[region], (err, result) => {
+    if (err) return res.status(500).json(err);
+
+    res.json({ count: result[0].count });
+  });
+});

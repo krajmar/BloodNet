@@ -1,0 +1,213 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+
+.dashboard-container {
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Header */
+.header {
+    padding: 48px 24px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-bottom: 1px solid #F9FAFB;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    background-color: #F3F4F6;
+    border-radius: 50%;
+    border: 1px solid #E5E7EB;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #333;
+}
+
+.blood-type {
+    font-size: 16px;
+    color: #9CA3AF;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+}
+
+.burger-menu {
+    width: 40px;
+    height: 40px;
+    background-color: #F9FAFB;
+    border: 1px solid #F3F4F6;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.burger-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    padding: 10px;
+}
+
+.line-long { width: 20px; height: 2px; background-color: #9CA3AF; }
+.line-short { width: 12px; height: 2px; background-color: #9CA3AF; }
+
+/* Main Content */
+.content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+}
+
+.stats-grid {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    flex: 1;
+    padding: 16px;
+    border-radius: 24px;
+}
+
+.red-bg {
+    background-color: #880808;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.white-bg {
+    background-color: white;
+    border: 1px solid #F3F4F6;
+}
+
+.label {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.label.muted { color: #9CA3AF; opacity: 1; }
+
+.value { font-size: 18px; font-weight: 700; }
+.value.dark { color: #333; }
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.grid-item {
+    background: white;
+    border: 1px solid #F3F4F6;
+    padding: 16px;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.icon-wrapper {
+    width: 52px;
+    height: 52px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.red-tint { background-color: #FEF2F2; }
+.amber-tint { background-color: #FFFBEB; }
+.gray-tint { background-color: #F9FAFB; }
+.blue-tint { background-color: #EFF6FF; }
+
+.item-info h3 { font-size: 18px; font-weight: 700; color: #333; }
+.item-info p { font-size: 16px; color: #9CA3AF; line-height: 1.25; margin-top: 4px; }
+
+.cta-banner {
+    background-color: #FEF2F2;
+    border: 1px solid #FEE2E2;
+    padding: 20px;
+    border-radius: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cta-text h4 { font-size: 18px; font-weight: 700; color: #4A0404; }
+.cta-text p { font-size: 16px; color: #B91C1C; opacity: 0.7; }
+
+.cta-circle {
+    width: 50px;
+    height: 50px;
+    background-color: #880808;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(136, 8, 8, 0.3);
+}
+
+/* Nav */
+.navbar {
+    height: 80px;
+    background-color: white;
+    border-top: 1px solid #F3F4F6;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 24px;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-item span { font-size: 14px; font-weight: 700; }
+.active { color: #880808; }
+.inactive { color: currentColor; opacity: 0.2; }
+
+.home-indicator {
+    height: 6px;
+    width: 128px;
+    background-color: #F3F4F6;
+    border-radius: 9999px;
+    margin: 0 auto 8px;
+}

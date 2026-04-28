@@ -22,6 +22,9 @@ function Login() {
         form
       );
 
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+      localStorage.setItem("role", res.data.role);
+
       const role = res.data.role;
 
       if (role === "donor") navigate("/donor/dashboard");
