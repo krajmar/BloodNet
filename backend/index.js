@@ -202,3 +202,38 @@ app.get("/requests/count/:region", (req, res) => {
     res.json({ count: result[0].count });
   });
 });
+
+//Getting the donor's donations
+
+app.get("/donor/donations/:id", (req, res) => {
+  const donorId = req.params.id;
+
+  const sql = `
+    SELECT 
+      d.id AS donation_id,
+      d.donation_date,
+      d.message,
+      d.quantity AS donated_quantity,
+      d.status AS donation_status,
+
+      r.id AS request_id,
+      r.quantity AS requested_quantity,
+      r.blood_type,
+      r.urgency,
+      r.region,
+
+      h.name AS hospital_name
+
+    FROM donation d
+    JOIN blood_requests r ON d.request_id = r.id
+    JOIN hospital h ON r.hospital_id = h.id
+
+    WHERE d.donor_id = ?
+  `;
+
+  db.query(sql, [donorId], (err, result) => {
+    if (err) return res.status(500).json(err);
+
+    res.json(result);
+  });
+});

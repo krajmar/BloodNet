@@ -1,11 +1,13 @@
 import "../styles/DonorDashboard.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function DonorDashboard() {
 
   const user = JSON.parse(localStorage.getItem("user"));
   const [numberActiveRequests, setNumberActiveRequests] = useState(-1);
+  const navigate = useNavigate();
 
   useEffect(()=>{
     if(!user?.region) return;
@@ -81,7 +83,7 @@ function DonorDashboard() {
                     <div class="icon-wrapper gray-tint">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                     </div>
-                    <div class="item-info">
+                    <div class="item-info" onClick={()=>navigate('/donor/donations')}>
                         <h3>Donations</h3>
                         <p>History of your blood contributions.</p>
                     </div>

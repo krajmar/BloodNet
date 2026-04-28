@@ -1,0 +1,184 @@
+import "../styles/DonorDonations.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
+
+import Card from "../components/Card.js";
+
+function DonorDonations(){
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    const [donations, setDonations] = useState([]);
+
+    useEffect(() => {
+        if (!user?.id) return;
+
+        axios
+            .get(`http://88.200.63.148:3001/donor/donations/${user.id}`)
+            .then((res) => {
+            setDonations(res.data);
+            })
+            .catch((err) => console.error(err));
+        }, [user]);
+
+    return(
+        <div class="notifications-container">
+    <header class="page-header">
+        <button class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <h1>Donations</h1>
+    </header>
+
+    <main class="notifications-list">
+        
+        {donations.map((d) => (
+            <div class="notification-card urgent">
+            <div class="card-header">
+                <div class="hospital-meta">
+                    <h2>{d.hospital_name}</h2>
+                    <p class="location-tag">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        {d.region}
+                    </p>
+                </div>
+                <div class="blood-type-square high-urgency">
+                    <span class="type-label">TYPE</span>
+                    <span class="type-value">{d.blood_type}</span>
+                </div>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-item">
+                    <label>Required Qty</label>
+                    <p>{d.requested_quantity}</p>
+                </div>
+                <div class="detail-item">
+                    <label>Urgency</label>
+                    <p class="urgency-text">{d.urgency}</p>
+                </div>
+                <div class="detail-item">
+                    <label>Status</label>
+                    <span class="status-done">Completed</span>
+                </div>
+                <div class="detail-item">
+                    <label>Request Date</label>
+                    <p class="date-text">{d.donation_date}</p>
+                </div>
+            </div>
+
+            <div class="card-message">
+                <label>Message</label>
+                <p>"Immediate need for A+ whole blood for emergency surgery. Your contribution can save a life today."</p>
+            </div>
+        </div>
+        ))}
+
+        <div class="notification-card urgent">
+            <div class="card-header">
+                <div class="hospital-meta">
+                    <h2>City Hospital</h2>
+                    <p class="location-tag">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Skopje Region
+                    </p>
+                </div>
+                <div class="blood-type-square high-urgency">
+                    <span class="type-label">TYPE</span>
+                    <span class="type-value">A+</span>
+                </div>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-item">
+                    <label>Required Qty</label>
+                    <p>450ml (1 Unit)</p>
+                </div>
+                <div class="detail-item">
+                    <label>Urgency</label>
+                    <p class="urgency-text">High</p>
+                </div>
+                <div class="detail-item">
+                    <label>Status</label>
+                    <span class="status-sent">Sent</span>
+                </div>
+                <div class="detail-item">
+                    <label>Request Date</label>
+                    <p class="date-text">24 Mar 2026</p>
+                </div>
+            </div>
+
+            <div class="card-message">
+                <label>Message</label>
+                <p>"Immediate need for A+ whole blood for emergency surgery. Your contribution can save a life today."</p>
+            </div>
+        </div>
+
+        <Card/>
+
+        <div class="notification-card completed">
+            <div class="card-header">
+                <div class="hospital-meta">
+                    <h2>St. Mother Teresa</h2>
+                    <p class="location-tag">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Ohrid Region
+                    </p>
+                </div>
+                <div class="blood-type-square neutral">
+                    <span class="type-label">TYPE</span>
+                    <span class="type-value">O-</span>
+                </div>
+            </div>
+
+            <div class="details-grid">
+                <div class="detail-item">
+                    <label>Required Qty</label>
+                    <p>900ml (2 Units)</p>
+                </div>
+                <div class="detail-item">
+                    <label>Urgency</label>
+                    <p class="urgency-medium">Medium</p>
+                </div>
+                <div class="detail-item">
+                    <label>Status</label>
+                    <span class="status-done">Completed</span>
+                </div>
+                <div class="detail-item">
+                    <label>Request Date</label>
+                    <p class="date-text">22 Mar 2026</p>
+                </div>
+            </div>
+
+            <div class="card-message">
+                <label>Message</label>
+                <p>"Routine replenishment of O negative stock. Thank you for your continued support."</p>
+            </div>
+        </div>
+
+    </main>
+
+    <nav class="bottom-menu">
+        <div class="menu-item inactive">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>Home</span>
+        </div>
+        <div class="menu-item active">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#880808" stroke="#880808" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
+            <span>Requests</span>
+        </div>
+        <div class="menu-item inactive">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>History</span>
+        </div>
+        <div class="menu-item inactive">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span>Account</span>
+        </div>
+    </nav>
+
+    <div class="home-bar"></div>
+</div>
+    )
+}
+
+export default DonorDonations;
