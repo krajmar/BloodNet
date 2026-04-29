@@ -2,7 +2,6 @@ import "../styles/DonorDonations.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import Card from "../components/Card.js";
 
 function DonorDonations(){
 
@@ -53,6 +52,10 @@ function DonorDonations(){
                     <p>{d.requested_quantity}</p>
                 </div>
                 <div class="detail-item">
+                    <label>Donated Qty</label>
+                    <p>{d.donated_quantity}</p>
+                </div>
+                <div class="detail-item">
                     <label>Urgency</label>
                     <p class="urgency-text">{d.urgency_level}</p>
                 </div>
@@ -62,13 +65,8 @@ function DonorDonations(){
                 </div>
                 <div class="detail-item">
                     <label>Request Date</label>
-                    <p class="date-text">{d.donation_date}</p>
+                    <p class="date-text">{new Date(d.donation_date).toLocaleDateString()}</p>
                 </div>
-            </div>
-
-            <div class="card-message">
-                <label>Message</label>
-                <p>"Immediate need for A+ whole blood for emergency surgery. Your contribution can save a life today."</p>
             </div>
         </div>
         ))}
@@ -99,5 +97,11 @@ function DonorDonations(){
 </div>
     )
 }
+
+/*CARD MESSAGE
+<div class="card-message">
+                <label>Message</label>
+                <p>"Immediate need for A+ whole blood for emergency surgery. Your contribution can save a life today."</p>
+            </div>*/
 
 export default DonorDonations;
