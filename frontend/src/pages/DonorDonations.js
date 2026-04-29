@@ -1,12 +1,13 @@
 import "../styles/DonorDonations.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import { useNavigate } from 'react-router-dom';
 
 function DonorDonations(){
 
     const user = JSON.parse(localStorage.getItem("user"));
     const [donations, setDonations] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!user?.id) return;
@@ -22,7 +23,7 @@ function DonorDonations(){
     return(
         <div class="notifications-container">
     <header class="page-header">
-        <button class="back-btn">
+        <button class="back-btn" onClick={()=>navigate('/donor/dashboard')}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
         <h1>Donations</h1>

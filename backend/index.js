@@ -238,3 +238,21 @@ app.get("/donor/donations/:id", (req, res) => {
     res.json(result);
   });
 });
+
+//Getting the donor's medical notes
+
+app.get("/donor/medical_notes/:id", (req, res) => {
+  const donorId = req.params.id;
+
+  const sql = `
+    SELECT * FROM medical_notes
+    WHERE donor_id = ?`;
+
+  db.query(sql, [donorId], (err, result) => {
+    if (err){ 
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+    res.json(result);
+  });
+});
