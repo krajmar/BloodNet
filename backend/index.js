@@ -256,3 +256,35 @@ app.get("/donor/medical_notes/:id", (req, res) => {
     res.json(result);
   });
 });
+
+//Donor adding medical note form fields inserting
+app.post("/donor/medical_notes/add_medical_note/:id", (req, res) => {
+  const {
+    description,
+    eligibility_status
+  } = req.body;
+
+  const donorId = req.params.id;
+
+  const sql = `
+    INSERT INTO medical_notes (
+      donor_id, description, date_reported, eligibility_status
+    )
+    VALUES (?, ?, CURDATE(), ?)
+  `;
+
+  db.query(sql,
+    [
+      donorId,
+      description,
+      eligibility_status
+    ],
+    (err, result) => {
+      if (err){
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+      }
+      res.json({ message: "Medical note inserted successfully" });
+    }
+  );
+});

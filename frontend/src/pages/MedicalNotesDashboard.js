@@ -73,7 +73,7 @@ function MedicalNotesDashboard(){
   );
 })}
 
-        <button className="login-btn" onClick={()=>navigate('/donor/dashboard')}>
+        <button className="login-btn" onClick={()=>navigate('/donor/medical_notes/add_medical_note')}>
           Add New Medical Note
         </button>
     </main>
