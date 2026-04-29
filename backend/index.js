@@ -212,28 +212,29 @@ app.get("/donor/donations/:id", (req, res) => {
     SELECT 
       d.id AS donation_id,
       d.donation_date,
-      d.message,
       d.quantity AS donated_quantity,
       d.status AS donation_status,
 
       r.id AS request_id,
       r.quantity AS requested_quantity,
       r.blood_type,
-      r.urgency,
+      r.urgency_level,
       r.region,
 
       h.name AS hospital_name
 
     FROM donation d
-    JOIN blood_requests r ON d.request_id = r.id
+    JOIN blood_request r ON d.request_id = r.id
     JOIN hospital h ON r.hospital_id = h.id
 
     WHERE d.donor_id = ?
   `;
 
   db.query(sql, [donorId], (err, result) => {
-    if (err) return res.status(500).json(err);
-
+    if (err){ 
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
     res.json(result);
   });
 });
