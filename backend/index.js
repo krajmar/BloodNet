@@ -288,3 +288,21 @@ app.post("/donor/medical_notes/add_medical_note/:id", (req, res) => {
     }
   );
 });
+
+//Getting the donor's awards
+
+app.get("/donor/awards/:id", (req, res) => {
+  const donorId = req.params.id;
+
+  const sql = `
+    SELECT * FROM award
+    WHERE donor_id = ?`;
+
+  db.query(sql, [donorId], (err, result) => {
+    if (err){ 
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+    res.json(result);
+  });
+});
