@@ -85,7 +85,7 @@ function DonorAwardsDashboard(){
             <span>Home</span>
         </div>
         <div class="menu-item inactive">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="#none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
             <span>Requests</span>
         </div>
         <div class="menu-item inactive">

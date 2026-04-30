@@ -306,3 +306,41 @@ app.get("/donor/awards/:id", (req, res) => {
     res.json(result);
   });
 });
+
+//Getting the donor's notifications
+
+app.get("/donor/notifications/:id", (req, res) => {
+  const donorId = req.params.id;
+  const bloodType = req.query.blood_type;
+  const donorRegion = req.query.region;
+
+  const sql = `
+    SELECT 
+      n.id AS notification_id,
+      n.message AS message,
+
+      r.id AS request_id,
+      r.quantity AS requested_quantity,
+      r.blood_type,
+      r.urgency_level,
+      r.region,
+      r.status AS request_status,
+      r.created_at AS date_created,
+
+      h.name AS hospital_name
+
+    FROM notification n
+    JOIN blood_request r ON n.request_id = r.id
+    JOIN hospital h ON r.hospital_id = h.id
+
+    WHERE r.blood_type = ? AND r.region = ? AND r.status = 'Sent' 
+  `;
+
+  db.query(sql, [bloodType, donorRegion], (err, result) => {
+    if (err){ 
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+    res.json(result);
+  });
+});
