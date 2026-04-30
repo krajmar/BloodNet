@@ -5,7 +5,8 @@ import "../styles/AddMedicalNote.css";
 
 function AddMedicalNote() {
 
-    const user = JSON.parse(localStorage.getItem("user"));
+  const [error, setError] = useState("");
+  const user = JSON.parse(localStorage.getItem("user"));
   const [form, setForm] = useState({
     illness: "",
     eligibility_status: ""
@@ -18,17 +19,24 @@ function AddMedicalNote() {
   };
 
    const submit = async () => {
-    try {
-      await axios.post(
-        `http://88.200.63.148:3001/donor/medical_notes/add_medical_note/${user?.id}`,
-        form
-      );
-      alert("Medical note added successfully!");
-    } catch (err) {
-      console.error(err);
-      alert("Error adding medical note.");
-    }
-  };
+  if (!form.description || !form.eligibility_status) {
+    setError("Error: Empty field");
+    return;
+  }
+
+  setError(""); // clear error if OK
+
+  try {
+    await axios.post(
+      `http://88.200.63.148:3001/donor/medical_notes/add_medical_note/${user?.id}`,
+      form
+    );
+    alert("Medical note added successfully!");
+  } catch (err) {
+    console.error(err);
+    alert("Error adding medical note.");
+  }
+};
 
   return (
     <div class="notifications-container">
@@ -61,6 +69,12 @@ function AddMedicalNote() {
       </select>
     </div>
 
+    {error && (
+      <div className="error-box">
+        {error}
+      </div>
+    )}
+
     <button className="login-btn" onClick={submit}>
       Add medical note
     </button>
@@ -74,8 +88,8 @@ function AddMedicalNote() {
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             <span>Home</span>
         </div>
-        <div class="menu-item active">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="#880808" stroke="#880808" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
+        <div class="menu-item inactive">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
             <span>Requests</span>
         </div>
         <div class="menu-item inactive">
