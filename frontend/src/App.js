@@ -15,6 +15,7 @@ import AddMedicalNote from "./pages/AddMedicalNote";
 import DonorAwardsDashboard from "./pages/DonorAwardsDashboard";
 import DonorNotifications from "./pages/DonorNotifications";
 import DonorProfile from "./pages/DonorProfile";
+import DonorEditProfile from "./pages/DonorEditProfile";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/donor/awards" element={<DonorAwardsDashboard />} />
         <Route path="/donor/notifications" element={<DonorNotifications />} />
         <Route path="/donor/profile" element={<DonorProfile />} />
+        <Route path="/donor/edit-profile" element={<DonorEditProfile />} />
 
         <Route path="/hospital/dashboard" element={<HospitalDashboard />} />
         <Route path="/blood_bank/dashboard" element={<BloodBankDashboard />} />

@@ -344,3 +344,23 @@ app.get("/donor/notifications/:id", (req, res) => {
     res.json(result);
   });
 });
+
+//Updating the donor's personal details 
+
+app.put("/donor/edit-profile/:id", (req, res) => {
+  const userId = req.params.id;
+  const { email, password, region, phone } = req.body;
+
+  const sql = `
+    UPDATE donor 
+    SET email = ?, password = ?, region = ?, phone = ? 
+    WHERE id = ?`;
+
+  db.query(sql, [email, password, region, phone, userId], (err, result) => {
+    if (err) {
+      console.error("SQL ERROR:", err);
+      return res.status(500).json({ error: "Database update failed" });
+    }
+    res.json({ message: "Profile updated successfully" });
+  });
+});
