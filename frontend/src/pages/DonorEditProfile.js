@@ -4,6 +4,8 @@ import axios from "axios";
 import "../styles/DonorEditProfile.css";
 
 function DonorEditProfile() {
+
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -28,6 +30,13 @@ function DonorEditProfile() {
   }, [user?.id]);*/
 
   const submit = async () => {
+
+    if (!form.email || !form.password || !form.region || !form.phone) {
+    setError("Error: Empty field");
+    return;
+  }
+
+  setError("");
     try {
       const res = await axios.put(`http://88.200.63.148:3001/donor/edit-profile/${user?.id}`, form);
       alert("Profile updated successfully!");
@@ -103,6 +112,12 @@ function DonorEditProfile() {
           </div>
 
         </div>
+
+        {error && (
+      <div className="error-box">
+        {error}
+      </div>
+    )}
 
         <button className="login-btn" onClick={submit}>
           Save changes
