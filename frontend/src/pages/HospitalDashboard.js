@@ -40,7 +40,7 @@ function HospitalDashboard() {
         <header class="header">
             <div class="profile-section">
                 <div class="avatar-circle" onClick={()=>navigate('/hospital/profile')}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#880808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#880808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M3 7v14"></path><path d="M21 7v14"></path><path d="M9 21V11h6v10"></path><path d="M2 3h20"></path></svg>
                 </div>
                 <div class="user-meta">
                     <h2 class="user-name">{user?.name}</h2>
@@ -72,7 +72,7 @@ function HospitalDashboard() {
                 
                 <div class="grid-item" onClick={()=>navigate('/hospital/requests')}>
                     <div class="icon-wrapper red-tint">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#880808" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#880808" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                     </div>
                     <div class="item-info">
                         <h3>View/Edit requests</h3>
@@ -82,7 +82,7 @@ function HospitalDashboard() {
 
                 <div class="grid-item" onClick={()=>navigate('/hospital/donations')}>
                     <div class="icon-wrapper amber-tint">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"></path></svg>
                     </div>
                     <div class="item-info">
                         <h3>Donations</h3>
@@ -92,7 +92,7 @@ function HospitalDashboard() {
 
                 <div class="grid-item" onClick={()=>navigate('/hospital/profile')}>
                     <div class="icon-wrapper gray-tint">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
                     </div>
                     <div class="item-info">
                         <h3>Account settings</h3>
@@ -102,7 +102,7 @@ function HospitalDashboard() {
 
                 <div class="grid-item" onClick={()=>navigate('/hospital/completed_requests')}>
                     <div class="icon-wrapper blue-tint">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E40AF" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14.5 2 14.5 7.5 20 7.5"></polyline></svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1E40AF" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                     </div>
                     <div class="item-info">
                         <h3>Completed requests</h3>
@@ -118,7 +118,7 @@ function HospitalDashboard() {
                     <p>Broadcast emergency blood needs</p>
                 </div>
                 <div class="cta-circle">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </div>
             </div>
         </main>
