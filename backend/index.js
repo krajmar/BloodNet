@@ -390,3 +390,42 @@ app.get("/hospital/last_request/:id", (req, res) => {
     res.json({ last_request: result[0].last_request });
   });
 });
+
+//Getting the hospital's donations
+
+app.get("/hospital/donations/:id", (req, res) => {
+  const hospitalId = req.params.id;
+
+  const sql = `
+    SELECT 
+      d.id AS donation_id,
+      d.donation_date,
+      d.quantity AS donated_quantity,
+      d.status AS donation_status,
+
+      r.id AS request_id,
+      r.quantity AS requested_quantity,
+      r.blood_type,
+      r.urgency_level,
+      r.region,
+
+      c.name AS donor_name,
+
+      h.name AS hospital_name
+
+    FROM donation d
+    JOIN blood_request r ON d.request_id = r.id
+    JOIN donor c ON d.donor_id = c.id 
+    JOIN hospital h ON r.hospital_id = h.id
+
+    WHERE r.hospital_id = ?
+  `;
+
+  db.query(sql, [hospitalId], (err, result) => {
+    if (err){ 
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+    res.json(result);
+  });
+});

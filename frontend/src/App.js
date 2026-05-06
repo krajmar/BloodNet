@@ -8,14 +8,17 @@ import RegisterHospital from "./pages/RegisterHospital";
 import RegisterBloodBank from "./pages/RegisterBloodBank";
 import DonorDashboard from "./pages/DonorDashboard";
 import DonorDonations from "./pages/DonorDonations";
-import HospitalDashboard from "./pages/HospitalDashboard";
-import BloodBankDashboard from "./pages/BloodBankDashboard";
 import MedicalNotesDashboard from "./pages/MedicalNotesDashboard";
 import AddMedicalNote from "./pages/AddMedicalNote";
 import DonorAwardsDashboard from "./pages/DonorAwardsDashboard";
 import DonorNotifications from "./pages/DonorNotifications";
 import DonorProfile from "./pages/DonorProfile";
 import DonorEditProfile from "./pages/DonorEditProfile";
+
+import HospitalDashboard from "./pages/HospitalDashboard";
+import HospitalDonations from "./pages/HospitalDonations";
+
+import BloodBankDashboard from "./pages/BloodBankDashboard";
 
 function App() {
   return (
@@ -38,6 +41,7 @@ function App() {
         <Route path="/donor/edit-profile" element={<DonorEditProfile />} />
 
         <Route path="/hospital/dashboard" element={<HospitalDashboard />} />
+        <Route path="/hospital/donations" element={<HospitalDonations />} />
 
         <Route path="/blood_bank/dashboard" element={<BloodBankDashboard />} />
       </Routes>
