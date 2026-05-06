@@ -429,3 +429,36 @@ app.get("/hospital/donations/:id", (req, res) => {
     res.json(result);
   });
 });
+
+//Getting the hospital's completed requests
+
+app.get("/hospital/completed_requests/:id", (req, res) => {
+  const hospitalId = req.params.id;
+
+  const sql = `
+    SELECT 
+
+      r.id AS request_id,
+      r.quantity AS requested_quantity,
+      r.blood_type,
+      r.urgency_level,
+      r.status,
+      r.region,
+      r.created_at,
+
+      h.name AS hospital_name
+
+    FROM blood_request r
+    JOIN hospital h ON r.hospital_id = h.id
+
+    WHERE r.hospital_id = ? AND r.status = 'Successful'
+  `;
+
+  db.query(sql, [hospitalId], (err, result) => {
+    if (err){ 
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+    res.json(result);
+  });
+});
