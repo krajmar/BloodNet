@@ -364,3 +364,29 @@ app.put("/donor/edit-profile/:id", (req, res) => {
     res.json({ message: "Profile updated successfully" });
   });
 });
+
+//==================================================HOSPITAL=============================================================================
+
+//Getting the number of active requests that the hospital created
+app.get("/hospital/active_requests/count/:id", (req, res) => {
+  const hospitalId = req.params.id;
+  const sql = `SELECT COUNT(*) AS count FROM blood_request WHERE hospital_id = ? AND status = 'Sent'`;
+
+  db.query(sql,[hospitalId], (err, result) => {
+    if (err) return res.status(500).json(err);
+
+    res.json({ count: result[0].count });
+  });
+});
+
+//Getting the date of the last request of the hospital
+app.get("/hospital/last_request/:id", (req, res) => {
+  const hospitalId = req.params.id;
+  const sql = `SELECT created_at AS last_request FROM blood_request WHERE hospital_id = ? ORDER BY created_at DESC LIMIT 1;`;
+
+  db.query(sql,[hospitalId], (err, result) => {
+    if (err) return res.status(500).json(err);
+
+    res.json({ last_request: result[0].last_request });
+  });
+});

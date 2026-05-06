@@ -38,6 +38,7 @@ function App() {
         <Route path="/donor/edit-profile" element={<DonorEditProfile />} />
 
         <Route path="/hospital/dashboard" element={<HospitalDashboard />} />
+
         <Route path="/blood_bank/dashboard" element={<BloodBankDashboard />} />
       </Routes>
     </Router>
