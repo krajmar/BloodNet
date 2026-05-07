@@ -49,7 +49,7 @@ function HospitalEditRequest() {
   return (
   <div className="notifications-container">
 
-    <div className="notification-card-req">
+    <div className="form-card">
 
       <header className="page-header">
         <button
@@ -73,6 +73,8 @@ function HospitalEditRequest() {
         <main className="notifications-list">
       <div className="login-form">
 
+      <div className="form-group">
+        <label>Blood type</label>
         <select
           name="blood_type"
           onChange={handleChange}
@@ -89,7 +91,10 @@ function HospitalEditRequest() {
           <option value="O+">O+</option>
           <option value="O-">O-</option>
         </select>
+        </div>
 
+      <div className="form-group">
+        <label>Quantity</label>
         <input
           type="number"
           name="quantity"
@@ -97,7 +102,10 @@ function HospitalEditRequest() {
           value={form.quantity}
           onChange={handleChange}
         />
+      </div>
 
+      <div className="form-group">
+        <label>Urgency level</label>
         <select
           name="urgency_level"
           value={form.urgency_level}
@@ -110,7 +118,10 @@ function HospitalEditRequest() {
           <option value="High">High</option>
           <option value="Very High">Very High</option>
         </select>
+        </div>
 
+      <div className="form-group">
+        <label>Status</label>
         <select
           name="status"
           value={form.status}
@@ -122,6 +133,7 @@ function HospitalEditRequest() {
           <option value="Sent">Sent</option>
           <option value="Successful">Successful</option>
         </select>
+      </div>
 
         {error && (
           <div className="error-message">

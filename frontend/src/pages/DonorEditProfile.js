@@ -19,15 +19,6 @@ function DonorEditProfile() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  /*const [profile, setProfile] = useState(null);
-
-  useEffect(() => {
-    if (!user?.id) return;
-    axios
-      .get(`http://88.200.63.148:3001/donor/profile/${user.id}`)
-      .then((res) => setProfile(res.data))
-      .catch((err) => console.error(err));
-  }, [user?.id]);*/
 
   const submit = async () => {
 
@@ -137,8 +128,8 @@ function DonorEditProfile() {
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             <span>History</span>
         </div>
-        <div className="menu-item active">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="880808" stroke="#880808" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <div className="menu-item inactive">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             <span>Account</span>
         </div>
     </nav>

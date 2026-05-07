@@ -44,7 +44,7 @@ function HospitalCreateRequest() {
   return (
     <div className="create-request-container">
 
-    <div className="create-request-card">
+    <div className="form-card">
 
       <header className="page-header">
         <button
@@ -68,6 +68,8 @@ function HospitalCreateRequest() {
         <main className="notifications-list">
       <div className="login-form">
 
+        <div className="form-group">
+        <label>Blood type</label>
         <select
           name="blood_type"
           onChange={handleChange}
@@ -83,14 +85,20 @@ function HospitalCreateRequest() {
           <option value="O+">O+</option>
           <option value="O-">O-</option>
         </select>
+        </div>
 
+        <div className="form-group">
+        <label>Quantity</label>
         <input
           type="number"
           name="quantity"
           placeholder="Quantity"
           onChange={handleChange}
         />
+        </div>
 
+        <div className="form-group">
+        <label>Urgency level</label>
         <select
           name="urgency_level"
           onChange={handleChange}
@@ -103,12 +111,17 @@ function HospitalCreateRequest() {
           <option value="Very High">Very High</option>
         </select>
 
+        </div>
+
+        <div className="form-group">
+        <label>Message</label>
         <input
           type="textarea"
           name="message"
           placeholder="Notification message"
           onChange={handleChange}
         />
+        </div>
 
         {error && (
           <div className="error-message">

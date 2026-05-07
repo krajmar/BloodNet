@@ -23,7 +23,7 @@ function HospitalDonations(){
     return(
         <div class="notifications-container">
     <header class="page-header">
-        <button class="back-btn" onClick={()=>navigate('/donor/dashboard')}>
+        <button class="back-btn" onClick={()=>navigate('/hospital/dashboard')}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
         <h1>Donations</h1>
@@ -84,8 +84,8 @@ function HospitalDonations(){
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             <span>Home</span>
         </div>
-        <div class="menu-item active">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="#880808" stroke="#880808" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
+        <div class="menu-item inactive">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
             <span>Requests</span>
         </div>
         <div class="menu-item inactive">
