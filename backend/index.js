@@ -462,3 +462,23 @@ app.get("/hospital/completed_requests/:id", (req, res) => {
     res.json(result);
   });
 });
+
+//Updating the hospital's personal details 
+
+app.put("/hospital/edit-profile/:id", (req, res) => {
+  const hospitalId = req.params.id;
+  const { email, password, region, address, phone } = req.body;
+
+  const sql = `
+    UPDATE hospital 
+    SET email = ?, password = ?, region = ?, address = ?, phone = ? 
+    WHERE id = ?`;
+
+  db.query(sql, [email, password, region, address, phone, hospitalId], (err, result) => {
+    if (err) {
+      console.error("SQL ERROR:", err);
+      return res.status(500).json({ error: "Database update failed" });
+    }
+    res.json({ message: "Profile updated successfully" });
+  });
+});

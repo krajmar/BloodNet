@@ -19,6 +19,7 @@ import HospitalDashboard from "./pages/HospitalDashboard";
 import HospitalDonations from "./pages/HospitalDonations";
 import HospitalCompletedRequests from "./pages/HospitalCompletedRequests";
 import HospitalProfile from "./pages/HospitalProfile";
+import HospitalEditProfile from "./pages/HospitalEditProfile";
 
 import BloodBankDashboard from "./pages/BloodBankDashboard";
 
@@ -46,6 +47,7 @@ function App() {
         <Route path="/hospital/donations" element={<HospitalDonations />} />
         <Route path="/hospital/completed_requests" element={<HospitalCompletedRequests />} />
         <Route path="/hospital/profile" element={<HospitalProfile />} />
+        <Route path="/hospital/edit-profile" element={<HospitalEditProfile />} />
 
         <Route path="/blood_bank/dashboard" element={<BloodBankDashboard />} />
       </Routes>

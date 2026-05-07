@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import "../styles/DonorEditProfile.css";
+import "../styles/HospitalEditProfile.css";
 
-function DonorEditProfile() {
+function HospitalEditProfile() {
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -13,46 +13,37 @@ function DonorEditProfile() {
     email: user?.email || "",
     password: user?.password || "",
     region: user?.region || "",
+    address: user?.address || "",
     phone: user?.phone || ""
   });
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  /*const [profile, setProfile] = useState(null);
-
-  useEffect(() => {
-    if (!user?.id) return;
-    axios
-      .get(`http://88.200.63.148:3001/donor/profile/${user.id}`)
-      .then((res) => setProfile(res.data))
-      .catch((err) => console.error(err));
-  }, [user?.id]);*/
 
   const submit = async () => {
 
-    if (!form.email || !form.password || !form.region || !form.phone) {
+    if (!form.email || !form.password || !form.region || !form.phone || !form.address) {
     setError("Error: Empty field");
     return;
   }
 
   setError("");
     try {
-      const res = await axios.put(`http://88.200.63.148:3001/donor/edit-profile/${user?.id}`, form);
+      const res = await axios.put(`http://88.200.63.148:3001/hospital/edit-profile/${user?.id}`, form);
       alert("Profile updated successfully!");
-      navigate("/donor/dashboard");
+      navigate("/hospital/dashboard");
     } catch (err) {
       console.error(err);
       alert("Failed to update profile");
     }
   };
 
-  const isEligible = user?.eligibility_status === "True";
 
   return (
       <div className="profile-container">
     <header className="page-header">
-        <button className="back-btn" onClick={()=>navigate('/donor/dashboard')}>
+        <button className="back-btn" onClick={()=>navigate('/hospital/dashboard')}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
         <h1>Edit Personal details</h1>
@@ -64,9 +55,6 @@ function DonorEditProfile() {
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#880808" strokeWidth="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
           </div>
           <h2>{user?.name || "Loading..."}</h2>
-          <span className={`eligibility-pill ${isEligible ? 'eligible' : 'not-eligible'}`}>
-            {isEligible ? "Eligible for Donation" : "Not Eligible"}
-          </span>
         </div>
 
         <div className="login-form">
@@ -110,6 +98,16 @@ function DonorEditProfile() {
                 value={form.phone}
             />
           </div>
+          <div className="form-group">
+                <label>Address</label>
+                <input
+                type="text"
+                name="address"
+                placeholder="address"
+                onChange={handleChange}
+                value={form.address}
+            />
+          </div>
 
         </div>
 
@@ -146,4 +144,4 @@ function DonorEditProfile() {
   );
 }
 
-export default DonorEditProfile;
+export default HospitalEditProfile;
