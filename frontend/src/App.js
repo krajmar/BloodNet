@@ -22,6 +22,7 @@ import HospitalProfile from "./pages/HospitalProfile";
 import HospitalEditProfile from "./pages/HospitalEditProfile";
 import HospitalRequests from "./pages/HospitalRequests";
 import HospitalEditRequest from "./pages/HospitalEditRequest";
+import HospitalCreateRequest from "./pages/HospitalCreateRequest";
 
 import BloodBankDashboard from "./pages/BloodBankDashboard";
 
@@ -52,6 +53,7 @@ function App() {
         <Route path="/hospital/edit-profile" element={<HospitalEditProfile />} />
         <Route path="/hospital/requests" element={<HospitalRequests />} />
         <Route path="/hospital/requests/edit-request/:id" element={<HospitalEditRequest />} />
+        <Route path="/hospital/requests/create-request" element={<HospitalCreateRequest />} />
 
         <Route path="/blood_bank/dashboard" element={<BloodBankDashboard />} />
       </Routes>

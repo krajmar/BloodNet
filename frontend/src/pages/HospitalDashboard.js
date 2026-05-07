@@ -112,7 +112,7 @@ function HospitalDashboard() {
 
             </div>
 
-            <div class="cta-banner">
+            <div class="cta-banner" onClick={()=>navigate('/hospital/requests/create-request')}>
                 <div class="cta-text">
                     <h4>Create a new request</h4>
                     <p>Broadcast emergency blood needs</p>

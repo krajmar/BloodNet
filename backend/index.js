@@ -561,3 +561,146 @@ app.put("/hospital/request/:id", (req, res) => {
     }
   );
 });
+
+//Hospital creating a new request and adding notifications for the donors and blood banks
+app.post("/hospital/requests/create-request/:id", (req, res) => {
+
+  const {
+    blood_type,
+    quantity,
+    urgency_level,
+    message,
+    region
+  } = req.body;
+
+  const hospitalId = req.params.id;
+
+  const sql = `
+    INSERT INTO blood_request (
+      hospital_id,
+      blood_type,
+      quantity,
+      urgency_level,
+      region,
+      status,
+      created_at
+    )
+    VALUES (?, ?, ?, ?, ?, 'Sent', CURDATE())
+  `;
+
+  db.query(
+    sql,
+    [
+      hospitalId,
+      blood_type,
+      quantity,
+      urgency_level,
+      region
+    ],
+    (err, result) => {
+
+      if (err) {
+        console.error("SQL ERROR:", err);
+        return res.status(500).json(err);
+      }
+
+      const requestId = result.insertId;
+
+      // =========================
+      // FIND MATCHING DONORS
+      // =========================
+
+      const donorSql = `
+        SELECT id
+        FROM donor
+        WHERE blood_type = ? AND region = ?
+      `;
+
+      db.query(
+        donorSql,
+        [blood_type, region],
+        (donorErr, donors) => {
+
+          if (donorErr) {
+            console.error(donorErr);
+            return res.status(500).json(donorErr);
+          }
+
+          // Create notification for every donor
+          donors.forEach((donor) => {
+
+            const notificationSql = `
+              INSERT INTO notification (
+                recipient_donor_id,
+                request_id,
+                message,
+                sent_at
+              )
+              VALUES (?, ?, ?, NOW())
+            `;
+
+            db.query(
+              notificationSql,
+              [
+                donor.id,
+                requestId,
+                message
+              ]
+            );
+          });
+
+        }
+      );
+
+      // =========================
+      // FIND MATCHING BLOOD BANKS
+      // =========================
+
+      const bloodBankSql = `
+        SELECT id
+        FROM blood_bank
+        WHERE region = ?
+      `;
+
+      db.query(
+        bloodBankSql,
+        [region],
+        (bbErr, bloodBanks) => {
+
+          if (bbErr) {
+            console.error(bbErr);
+            return res.status(500).json(bbErr);
+          }
+
+          bloodBanks.forEach((bank) => {
+
+            const notificationSql = `
+              INSERT INTO notification (
+                recipient_blood_bank_id,
+                request_id,
+                message,
+                sent_at
+              )
+              VALUES (?, ?, ?, NOW())
+            `;
+
+            db.query(
+              notificationSql,
+              [
+                bank.id,
+                requestId,
+                message
+              ]
+            );
+          });
+
+        }
+      );
+
+      res.json({
+        message: "New request created successfully"
+      });
+
+    }
+  );
+});
