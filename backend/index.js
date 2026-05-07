@@ -482,3 +482,82 @@ app.put("/hospital/edit-profile/:id", (req, res) => {
     res.json({ message: "Profile updated successfully" });
   });
 });
+
+//Getting the hospital's requests
+
+app.get("/hospital/requests/:id", (req, res) => {
+  const hospitalId = req.params.id;
+
+  const sql = `
+    SELECT 
+
+      r.id AS request_id,
+      r.quantity AS requested_quantity,
+      r.blood_type,
+      r.urgency_level,
+      r.status,
+      r.region,
+      r.created_at,
+
+      h.name AS hospital_name
+
+    FROM blood_request r
+    JOIN hospital h ON r.hospital_id = h.id
+
+    WHERE r.hospital_id = ? AND r.status = 'Sent'
+  `;
+
+  db.query(sql, [hospitalId], (err, result) => {
+    if (err){ 
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+    res.json(result);
+  });
+});
+
+// Get one request for editing the requests of the hospital
+app.get("/hospital/request/:id", (req, res) => {
+
+  const hospitalId = req.params.id;
+
+  const sql = `
+    SELECT *
+    FROM blood_request
+    WHERE id = ?
+  `;
+
+  db.query(sql, [hospitalId], (err, result) => {
+    if (err) return res.status(500).json(err);
+
+    res.json(result[0]);
+  });
+});
+
+// Update hospital's request
+app.put("/hospital/request/:id", (req, res) => {
+  const hospitalId = req.params.id;
+  const blood_type = req.body.blood_type;
+  const address = req.body.address;
+  const quantity = req.body.quantity;
+  const urgency_level = req.body.urgency_level;
+  const status = req.body.status;
+
+  const sql = `
+    UPDATE blood_request
+    SET blood_type = ?, quantity = ?, urgency_level = ?, status = ?
+    WHERE id = ?
+  `;
+
+  db.query(
+    sql,
+    [blood_type, quantity, urgency_level, status, hospitalId],
+    (err, result) => {
+      if (err) return res.status(500).json(err);
+
+      res.json({
+        message: "Request updated successfully"
+      });
+    }
+  );
+});

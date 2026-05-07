@@ -9,7 +9,6 @@
 
 .login-card {
   width: 100%;
-  max-width: 420px;
   background: white;
   padding: 50px 40px;
   border-radius: 20px;
@@ -131,3 +130,12 @@
 .bottom-menu { height: 80px; background: white; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #F3F4F6; }
 .menu-item { font-size: 16px; font-weight: 700; color: #9CA3AF; cursor: pointer; }
 .menu-item.active { color: #880808; }
+
+.blood-select {
+  height: 45px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 16px;
+}
