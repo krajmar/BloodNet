@@ -34,7 +34,7 @@
 .info-list { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
 .info-row { padding: 16px; border-bottom: 1px solid #F9FAFB; display: flex; justify-content: space-between; align-items: center; }
 .info-row span { font-size: 16px; font-weight: 700; color: #9CA3AF; text-transform: uppercase; }
-.info-row p { font-size: 16px; font-weight: 700; color: #333; }
+.info-row p { font-size: 18px; font-weight: 700; color: #333; }
 .info-row.last-donation { background: #F9FAFB; }
 .blood-type { color: #880808 !important; }
 
