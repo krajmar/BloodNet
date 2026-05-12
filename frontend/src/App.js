@@ -55,7 +55,7 @@ function App() {
         <Route path="/hospital/requests/edit-request/:id" element={<HospitalEditRequest />} />
         <Route path="/hospital/requests/create-request" element={<HospitalCreateRequest />} />
 
-        <Route path="/blood_bank/dashboard" element={<BloodBankDashboard />} />
+        <Route path="/bloodbank/dashboard" element={<BloodBankDashboard />} />
       </Routes>
     </Router>
   );

@@ -704,3 +704,47 @@ app.post("/hospital/requests/create-request/:id", (req, res) => {
     }
   );
 });
+
+//==================================BLOOD BANK ==========================================
+
+//Getting the number of active requests within the same region as the blood bank
+app.get("/bloodbank/requests/count/:region", (req, res) => {
+  const { region } = req.params;
+  const sql = `SELECT COUNT(*) AS count FROM blood_request WHERE region = ? AND status = 'Sent'`;
+
+  db.query(sql,[region], (err, result) => {
+    if (err) {
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+    res.json({ count: result[0].count });
+  });
+});
+
+//Getting the date of the last donation of the bloodbank
+app.get("/bloodbank/last_donation/:id", (req, res) => {
+  const bloodBankId = req.params.id;
+  const sql = `SELECT donation_date AS last_donation_date FROM donation WHERE blood_bank_id = ? ORDER BY donation_date DESC LIMIT 1;`;
+
+  db.query(sql,[bloodBankId], (err, result) => {
+    if (err){ 
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+    res.json({ last_donation_date: result[0].last_donation_date });
+  });
+});
+
+//Getting the number of the total donations of the bloodbank
+app.get("/bloodbank/total_donations/:id", (req, res) => {
+  const bloodBankId = req.params.id;
+  const sql = `SELECT COUNT (*) AS total_donations FROM donation WHERE blood_bank_id = ?;`;
+
+  db.query(sql,[bloodBankId], (err, result) => {
+    if (err){ 
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+    res.json({ total_donations: result[0].total_donations });
+  });
+});
