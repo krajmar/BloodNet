@@ -1,9 +1,9 @@
-import "../styles/DonorNotifications.css";
+import "../styles/BloodBankNotifications.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
-function DonorNotifications(){
+function BloodBankNotifications(){
 
     const user = JSON.parse(localStorage.getItem("user"));
     const [notifications, setNotifications] = useState([]);
@@ -13,9 +13,8 @@ function DonorNotifications(){
         if (!user?.id) return;
 
         axios
-            .get(`http://88.200.63.148:3001/donor/notifications/${user.id}`, {
+            .get(`http://88.200.63.148:3001/bloodbank/notifications/${user.id}`, {
             params: {
-                blood_type: user.blood_type,
                 region: user.region
             }
             })
@@ -28,7 +27,7 @@ function DonorNotifications(){
     return(
         <div className="notifications-container">
     <header className="page-header">
-        <button className="back-btn" onClick={()=>navigate('/donor/dashboard')}>
+        <button className="back-btn" onClick={()=>navigate('/bloodbank/dashboard')}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
         <h1>Notifications</h1>
@@ -37,7 +36,7 @@ function DonorNotifications(){
     <main className="notifications-list">
         
         {notifications.map((n) => (
-            <div className="notification-card-donor urgent" key={n.notification_id}>
+            <div className="notification-card-blood-bank urgent" key={n.notification_id}>
             <div className="card-header">
                 <div className="hospital-meta">
                     <h2>{n.hospital_name}</h2>
@@ -104,10 +103,4 @@ function DonorNotifications(){
     )
 }
 
-/*CARD MESSAGE
-<div className="card-message">
-                <label>Message</label>
-                <p>"Immediate need for A+ whole blood for emergency surgery. Your contribution can save a life today."</p>
-            </div>*/
-
-export default DonorNotifications;
+export default BloodBankNotifications;

@@ -25,6 +25,7 @@ import HospitalEditRequest from "./pages/HospitalEditRequest";
 import HospitalCreateRequest from "./pages/HospitalCreateRequest";
 
 import BloodBankDashboard from "./pages/BloodBankDashboard";
+import BloodBankNotifications from "./pages/BloodBankNotifications";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
         <Route path="/hospital/requests/create-request" element={<HospitalCreateRequest />} />
 
         <Route path="/bloodbank/dashboard" element={<BloodBankDashboard />} />
+        <Route path="/bloodbank/notifications" element={<BloodBankNotifications />} />
       </Routes>
     </Router>
   );
