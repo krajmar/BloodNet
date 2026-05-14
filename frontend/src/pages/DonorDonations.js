@@ -5,15 +5,34 @@ import { useNavigate } from 'react-router-dom';
 
 function DonorDonations(){
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    //const user = JSON.parse(localStorage.getItem("user"));
     const [donations, setDonations] = useState([]);
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+
+  useEffect(() => {
+
+    axios.get(
+        "http://88.200.63.148:3001/me",
+        {
+        withCredentials: true
+        }
+    )
+    .then((res) => {
+        setUser(res.data);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+
+    }, []);
 
     useEffect(() => {
         if (!user?.id) return;
 
-        axios
-            .get(`http://88.200.63.148:3001/donor/donations/${user.id}`)
+        axios.get(`http://88.200.63.148:3001/donor/donations/${user.id}`,{
+                withCredentials: true
+            })
             .then((res) => {
             setDonations(res.data);
             })

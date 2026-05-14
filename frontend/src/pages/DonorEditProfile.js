@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import "../styles/DonorEditProfile.css";
@@ -7,7 +7,25 @@ function DonorEditProfile() {
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  //const user = JSON.parse(localStorage.getItem("user"));
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+
+    axios.get(
+        "http://88.200.63.148:3001/me",
+        {
+        withCredentials: true
+        }
+    )
+    .then((res) => {
+        setUser(res.data);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+
+    }, []);
 
   const [form, setForm] = useState({
     email: user?.email || "",
@@ -15,6 +33,17 @@ function DonorEditProfile() {
     region: user?.region || "",
     phone: user?.phone || ""
   });
+
+  useEffect(() => {
+  if (user) {
+    setForm({
+      email: user.email || "",
+      password: user.password || "",
+      region: user.region || "",
+      phone: user.phone || ""
+    });
+  }
+}, [user]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,7 +58,9 @@ function DonorEditProfile() {
 
   setError("");
     try {
-      const res = await axios.put(`http://88.200.63.148:3001/donor/edit-profile/${user?.id}`, form);
+      const res = await axios.put(`http://88.200.63.148:3001/donor/edit-profile/${user?.id}`, form, {
+        withCredentials: true,
+        });
       alert("Profile updated successfully!");
       navigate("/donor/dashboard");
     } catch (err) {

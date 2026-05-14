@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/AddMedicalNote.css";
@@ -6,13 +6,32 @@ import "../styles/AddMedicalNote.css";
 function AddMedicalNote() {
 
   const [error, setError] = useState("");
-  const user = JSON.parse(localStorage.getItem("user"));
+  //const user = JSON.parse(localStorage.getItem("user"));
   const [form, setForm] = useState({
     illness: "",
     eligibility_status: ""
   });
 
   const navigate = useNavigate();
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+
+    axios.get(
+        "http://88.200.63.148:3001/me",
+        {
+        withCredentials: true
+        }
+    )
+    .then((res) => {
+        setUser(res.data);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+
+    }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -29,7 +48,9 @@ function AddMedicalNote() {
   try {
     await axios.post(
       `http://88.200.63.148:3001/donor/medical_notes/add_medical_note/${user?.id}`,
-      form
+      form,{
+        withCredentials: true
+      }
     );
     alert("Medical note added successfully!");
   } catch (err) {

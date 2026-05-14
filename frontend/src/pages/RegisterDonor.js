@@ -23,7 +23,10 @@ function RegisterDonor() {
     try {
       await axios.post(
         "http://88.200.63.148:3001/register/donor",
+        {
+        withCredentials: true,
         form
+        }
       );
       alert("Donor registered successfully!");
     } catch (err) {

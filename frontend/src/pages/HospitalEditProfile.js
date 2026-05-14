@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import "../styles/HospitalEditProfile.css";
@@ -7,7 +7,25 @@ function HospitalEditProfile() {
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  //const user = JSON.parse(localStorage.getItem("user"));
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+
+    axios.get(
+        "http://88.200.63.148:3001/me",
+        {
+        withCredentials: true
+        }
+    )
+    .then((res) => {
+        setUser(res.data);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+
+    }, []);
 
   const [form, setForm] = useState({
     email: user?.email || "",
@@ -16,6 +34,18 @@ function HospitalEditProfile() {
     address: user?.address || "",
     phone: user?.phone || ""
   });
+
+  useEffect(() => {
+  if (user) {
+    setForm({
+      email: user.email || "",
+      password: user.password || "",
+      region: user.region || "",
+      address: user.address || "",
+      phone: user.phone || ""
+    });
+  }
+}, [user]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -30,7 +60,9 @@ function HospitalEditProfile() {
 
   setError("");
     try {
-      const res = await axios.put(`http://88.200.63.148:3001/hospital/edit-profile/${user?.id}`, form);
+      const res = await axios.put(`http://88.200.63.148:3001/hospital/edit-profile/${user?.id}`, form, {
+        withCredentials: true,
+        });
       alert("Profile updated successfully!");
       navigate("/hospital/dashboard");
     } catch (err) {

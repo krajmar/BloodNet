@@ -7,7 +7,26 @@ function HospitalEditRequest() {
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  //const user = JSON.parse(localStorage.getItem("user"));
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+
+    axios.get(
+        "http://88.200.63.148:3001/me",
+        {
+        withCredentials: true
+        }
+    )
+    .then((res) => {
+        setUser(res.data);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+
+    }, []);
 
   const { id } = useParams();
 
@@ -24,7 +43,9 @@ function HospitalEditRequest() {
 
   useEffect(()=>{
     axios
-      .get(`http://88.200.63.148:3001/hospital/request/${id}`)
+      .get(`http://88.200.63.148:3001/hospital/request/${id}`,{
+        withCredentials: true
+      })
       .then((res) => {
         setForm(res.data);
       })
@@ -32,10 +53,19 @@ function HospitalEditRequest() {
   }, [id]);
 
   const submit = async () => {
+      if (!form.blood_type || !form.quantity || !form.urgency_level || !form.status) {
+      setError("Error: Empty field");
+      return;
+    }
+
+    setError("");
     try {
       await axios.put(
         `http://88.200.63.148:3001/hospital/request/${id}`,
-        form
+        form,
+        {
+          withCredentials: true
+        }
       );
 
       alert("Request updated!");

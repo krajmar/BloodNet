@@ -5,15 +5,35 @@ import { useNavigate } from 'react-router-dom';
 
 function HospitalCompletedRequests(){
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    //const user = JSON.parse(localStorage.getItem("user"));
     const [completedRequests, setCompletedRequests] = useState([]);
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+
+  useEffect(() => {
+
+    axios.get(
+        "http://88.200.63.148:3001/me",
+        {
+        withCredentials: true
+        }
+    )
+    .then((res) => {
+        setUser(res.data);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+
+    }, []);
 
     useEffect(() => {
         if (!user?.id) return;
 
         axios
-            .get(`http://88.200.63.148:3001/hospital/completed_requests/${user.id}`)
+            .get(`http://88.200.63.148:3001/hospital/completed_requests/${user.id}`,{
+                withCredentials: true
+            })
             .then((res) => {
             setCompletedRequests(res.data);
             })

@@ -5,21 +5,45 @@ import { useNavigate } from 'react-router-dom';
 
 function DonorDashboard() {
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  //const user = JSON.parse(localStorage.getItem("user"));
   const [numberActiveRequests, setNumberActiveRequests] = useState(-1);
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
 
-  useEffect(()=>{
-    if(!user?.region) return;
-    axios
-    .get(`http://88.200.63.148:3001/requests/count/${user.region}`)
+  useEffect(() => {
+
+    axios.get(
+        "http://88.200.63.148:3001/me",
+        {
+        withCredentials: true
+        }
+    )
+    .then((res) => {
+        setUser(res.data);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+
+    }, []);
+
+  useEffect(() => {
+  if (!user?.region) return;
+
+  axios
+    .get(`http://88.200.63.148:3001/requests/count/${user.region}`,
+        {
+    withCredentials: true
+    }
+    )
     .then((res) => {
       setNumberActiveRequests(res.data.count);
     })
     .catch((err) => {
       console.error(err);
-    });    
-  })
+    });
+
+}, [user]);
 
   return (
 <body>
@@ -101,7 +125,7 @@ function DonorDashboard() {
 
             </div>
 
-            <div class="cta-banner">
+            <div class="cta-banner" onClick={()=>navigate('/donor/notifications')}>
                 <div class="cta-text">
                     <h4>Find Blood Drive</h4>
                     <p>{numberActiveRequests} events near you today</p>

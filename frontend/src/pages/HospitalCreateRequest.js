@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../styles/HospitalCreateRequest.css";
@@ -6,8 +6,26 @@ import "../styles/HospitalCreateRequest.css";
 function HospitalCreateRequest() {
   
     const [error, setError] = useState("");
-    const user = JSON.parse(localStorage.getItem("user"));
+    //const user = JSON.parse(localStorage.getItem("user"));
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+
+  useEffect(() => {
+
+    axios.get(
+        "http://88.200.63.148:3001/me",
+        {
+        withCredentials: true
+        }
+    )
+    .then((res) => {
+        setUser(res.data);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+
+    }, []);
 
     const [form, setForm] = useState({
         blood_type: "",
@@ -25,6 +43,7 @@ function HospitalCreateRequest() {
       await axios.post(
         `http://88.200.63.148:3001/hospital/requests/create-request/${user?.id}`, 
             {
+                withCredentials: true,
                 blood_type: form.blood_type,
                 quantity: form.quantity,
                 urgency_level: form.urgency_level,

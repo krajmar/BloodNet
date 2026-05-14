@@ -20,7 +20,10 @@ function RegisterHospital() {
     try {
       await axios.post(
         "http://88.200.63.148:3001/register/hospital",
+        {
+        withCredentials: true,
         form
+        }
       );
       alert("Hospital registered successfully!");
     } catch (err) {

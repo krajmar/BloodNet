@@ -5,14 +5,34 @@ import { useNavigate } from 'react-router-dom';
 
 function HospitalDashboard() {
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  //const user = JSON.parse(localStorage.getItem("user"));
   const [numberActiveRequests, setNumberActiveRequests] = useState(-1);
   const [lastRequest, setLastRequest] = useState(null);
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+
+    axios.get(
+        "http://88.200.63.148:3001/me",
+        {
+        withCredentials: true
+        }
+    )
+    .then((res) => {
+        setUser(res.data);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+
+    }, []);
 
   useEffect(()=>{
     axios
-    .get(`http://88.200.63.148:3001/hospital/active_requests/count/${user.id}`)
+    .get(`http://88.200.63.148:3001/hospital/active_requests/count/${user?.id}`,{
+        withCredentials: true
+    })
     .then((res) => {
       setNumberActiveRequests(res.data.count);
     })
@@ -23,7 +43,9 @@ function HospitalDashboard() {
 
   useEffect(()=>{
     axios
-    .get(`http://88.200.63.148:3001/hospital/last_request/${user.id}`)
+    .get(`http://88.200.63.148:3001/hospital/last_request/${user?.id}`,{
+        withCredentials: true
+    })
     .then((res) => {
       setLastRequest(res.data.last_request);
     })

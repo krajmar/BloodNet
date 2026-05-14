@@ -1,13 +1,29 @@
-//import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-//import axios from "axios";
+import axios from "axios";
 import "../styles/HospitalProfile.css";
 
 function HospitalProfile() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
+  //const user = JSON.parse(localStorage.getItem("user"));
+  const [user, setUser] = useState(null);
 
-  const isEligible = user?.eligibility_status === "True";
+  useEffect(() => {
+
+    axios.get(
+        "http://88.200.63.148:3001/me",
+        {
+        withCredentials: true
+        }
+    )
+    .then((res) => {
+        setUser(res.data);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+
+    }, []);
 
   return (
       <div className="profile-container">

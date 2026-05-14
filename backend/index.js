@@ -1,11 +1,17 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./config/db");
-
+const cookieParser = require("cookie-parser");
 const app = express();
 
-app.use(cors());
+//app.use(cors());
+app.use(cors({
+  origin: "http://88.200.63.148:3002",
+  credentials: true
+}));
 app.use(express.json());
+app.use(cookieParser());
+
 
 app.get("/", (req, res) => {
   res.send("BloodNet API running");
@@ -151,10 +157,25 @@ app.post("/login", (req, res) => {
   db.query(donorSql, [email, password], (err, donorResult) => {
     if (err) return res.status(500).json(err);
 
-    if (donorResult.length > 0) {
+    /*if (donorResult.length > 0) {
       return res.json({
         role: "donor",
         user: donorResult[0]
+      });
+    }*/
+
+      if (donorResult.length > 0) {
+
+      res.cookie("userId", donorResult[0].id, {
+        httpOnly: true
+      });
+
+      res.cookie("role", "donor", {
+        httpOnly: true
+      });
+
+      return res.json({
+        role: "donor"
       });
     }
 
@@ -163,10 +184,25 @@ app.post("/login", (req, res) => {
     db.query(hospitalSql, [email, password], (err2, hospitalResult) => {
       if (err2) return res.status(500).json(err2);
 
-      if (hospitalResult.length > 0) {
+      /*if (hospitalResult.length > 0) {
         return res.json({
           role: "hospital",
           user: hospitalResult[0]
+        });
+      }*/
+
+        if (hospitalResult.length > 0) {
+
+        res.cookie("userId", hospitalResult[0].id, {
+          httpOnly: true
+        });
+
+        res.cookie("role", "hospital", {
+          httpOnly: true
+        });
+
+        return res.json({
+          role: "hospital"
         });
       }
 
@@ -175,10 +211,25 @@ app.post("/login", (req, res) => {
       db.query(bloodSql, [email, password], (err3, bloodResult) => {
         if (err3) return res.status(500).json(err3);
 
-        if (bloodResult.length > 0) {
+        /*if (bloodResult.length > 0) {
           return res.json({
             role: "blood_bank",
             user: bloodResult[0]
+          });
+        }*/
+
+          if (bloodResult.length > 0) {
+
+          res.cookie("userId", bloodResult[0].id, {
+            httpOnly: true
+          });
+
+          res.cookie("role", "blood_bank", {
+            httpOnly: true
+          });
+
+          return res.json({
+            role: "blood_bank"
           });
         }
 
@@ -189,6 +240,39 @@ app.post("/login", (req, res) => {
       });
     });
   });
+});
+
+//ROUTE "ME" FOR GETTING THE DETAILS OF THE LOGGED USER
+
+app.get("/me", (req, res) => {
+
+  const userId = req.cookies.userId;
+  const role = req.cookies.role;
+
+  if (!userId || !role) {
+    return res.status(401).json({
+      message: "Not logged in"
+    });
+  }
+
+  const table =
+    role === "donor"
+      ? "donor"
+      : role === "hospital"
+      ? "hospital"
+      : "blood_bank";
+
+  const sql = `SELECT * FROM ${table} WHERE id = ?`;
+
+  db.query(sql, [userId], (err, result) => {
+
+    if (err)
+      return res.status(500).json(err);
+
+    res.json(result[0]);
+
+  });
+
 });
 
 //Getting the number of active requests within the same region as the donor
@@ -386,6 +470,12 @@ app.get("/hospital/last_request/:id", (req, res) => {
 
   db.query(sql,[hospitalId], (err, result) => {
     if (err) return res.status(500).json(err);
+
+    if (result.length === 0) {
+      return res.json({
+        last_request: null
+      });
+    }
 
     res.json({ last_request: result[0].last_request });
   });
@@ -731,6 +821,13 @@ app.get("/bloodbank/last_donation/:id", (req, res) => {
       console.error("SQL ERROR:", err);
       return res.status(500).json(err);
     }
+
+    if (result.length === 0) {
+      return res.json({
+        last_request: null
+      });
+    }
+
     res.json({ last_donation_date: result[0].last_donation_date });
   });
 });
@@ -745,6 +842,13 @@ app.get("/bloodbank/total_donations/:id", (req, res) => {
       console.error("SQL ERROR:", err);
       return res.status(500).json(err);
     }
+
+    if (result.length === 0) {
+      return res.json({
+        last_request: null
+      });
+    }
+
     res.json({ total_donations: result[0].total_donations });
   });
 });

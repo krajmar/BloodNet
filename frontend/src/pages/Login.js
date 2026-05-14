@@ -19,11 +19,14 @@ function Login() {
     try {
       const res = await axios.post(
         "http://88.200.63.148:3001/login",
-        form
+        form,
+        {
+          withCredentials: true
+        }
       );
 
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-      localStorage.setItem("role", res.data.role);
+      //localStorage.setItem("user", JSON.stringify(res.data.user));
+      //localStorage.setItem("role", res.data.role);
 
       const role = res.data.role;
 
