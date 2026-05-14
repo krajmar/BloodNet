@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import "../styles/HospitalProfile.css";
+import "../styles/BloodBankProfile.css";
 
-function HospitalProfile() {
+function BloodBankProfile() {
   const navigate = useNavigate();
   //const user = JSON.parse(localStorage.getItem("user"));
   const [user, setUser] = useState(null);
@@ -25,10 +25,11 @@ function HospitalProfile() {
 
     }, []);
 
+
   return (
       <div className="profile-container">
     <header className="page-header">
-        <button className="back-btn" onClick={()=>navigate('/hospital/dashboard')}>
+        <button className="back-btn" onClick={()=>navigate('/bloodbank/dashboard')}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
         <h1>Personal details</h1>
@@ -43,10 +44,11 @@ function HospitalProfile() {
         </div>
 
         <div className="info-list">
-          <div className="info-row"><span>Region</span><p>{user?.region}</p></div>
-          <div className="info-row"><span>Email</span><p>{user?.email}</p></div>
-          <div className="info-row"><span>Phone</span><p>{user?.phone}</p></div>
-          <div className="info-row"><span>Address</span><p>{user?.address}</p></div>
+          <div className="info-row-blood-bank"><span>Region</span><p>{user?.region}</p></div>
+          <div className="info-row-blood-bank"><span>Email</span><p>{user?.email}</p></div>
+          <div className="info-row-blood-bank"><span>Phone</span><p>{user?.phone}</p></div>
+          <div className="info-row-blood-bank"><span>Capacity</span><p>{user?.capacity} units</p></div>
+          <div className="info-row-blood-bank"><span>Address</span><p>{user?.address}</p></div>
         </div>
 
         <button className="edit-btn" onClick={() => navigate('/bloodbank/edit-profile')}>
@@ -77,4 +79,4 @@ function HospitalProfile() {
   );
 }
 
-export default HospitalProfile;
+export default BloodBankProfile;

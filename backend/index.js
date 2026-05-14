@@ -500,12 +500,17 @@ app.get("/hospital/donations/:id", (req, res) => {
       r.region,
 
       c.name AS donor_name,
+      b.name AS blood_bank_name,
 
       h.name AS hospital_name
 
     FROM donation d
     JOIN blood_request r ON d.request_id = r.id
-    JOIN donor c ON d.donor_id = c.id 
+    LEFT JOIN donor c 
+      ON d.donor_id = c.id
+
+    LEFT JOIN blood_bank b 
+      ON d.blood_bank_id = b.id 
     JOIN hospital h ON r.hospital_id = h.id
 
     WHERE r.hospital_id = ?
@@ -887,5 +892,79 @@ app.get("/bloodbank/notifications/:id", (req, res) => {
       return res.status(500).json(err);
     }
     res.json(result);
+  });
+});
+
+//Getting the Blood bank's awards
+
+app.get("/bloodbank/awards/:id", (req, res) => {
+  const bloodBankId = req.params.id;
+
+  const sql = `
+    SELECT * FROM award
+    WHERE blood_bank_id = ?`;
+
+  db.query(sql, [bloodBankId], (err, result) => {
+    if (err){ 
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+    res.json(result);
+  });
+});
+
+//Getting the Blood bank's donations
+
+app.get("/bloodbank/donations/:id", (req, res) => {
+  const bloodBankId = req.params.id;
+
+  const sql = `
+    SELECT 
+      d.id AS donation_id,
+      d.donation_date,
+      d.quantity AS donated_quantity,
+      d.status AS donation_status,
+
+      r.id AS request_id,
+      r.quantity AS requested_quantity,
+      r.blood_type,
+      r.urgency_level,
+      r.region,
+
+      h.name AS hospital_name
+
+    FROM donation d
+    JOIN blood_request r ON d.request_id = r.id
+    JOIN hospital h ON r.hospital_id = h.id
+
+    WHERE d.blood_bank_id = ?
+  `;
+
+  db.query(sql, [bloodBankId], (err, result) => {
+    if (err){ 
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+    res.json(result);
+  });
+});
+
+//Updating the Blood bank's personal details 
+
+app.put("/bloodbank/edit-profile/:id", (req, res) => {
+  const bloodBankId = req.params.id;
+  const { email, password, region, address, capacity, phone } = req.body;
+
+  const sql = `
+    UPDATE blood_bank 
+    SET email = ?, password = ?, region = ?, address = ?, capacity = ?, phone = ? 
+    WHERE id = ?`;
+
+  db.query(sql, [email, password, region, address, capacity, phone, bloodBankId], (err, result) => {
+    if (err) {
+      console.error("SQL ERROR:", err);
+      return res.status(500).json({ error: "Database update failed" });
+    }
+    res.json({ message: "Profile updated successfully" });
   });
 });

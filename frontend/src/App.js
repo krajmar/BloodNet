@@ -26,6 +26,10 @@ import HospitalCreateRequest from "./pages/HospitalCreateRequest";
 
 import BloodBankDashboard from "./pages/BloodBankDashboard";
 import BloodBankNotifications from "./pages/BloodBankNotifications";
+import BloodBankAwardsDashboard from "./pages/BloodBankAwardsDashboard";
+import BloodBankDonations from "./pages/BloodBankDonations";
+import BloodBankProfile from "./pages/BloodBankProfile";
+import BloodBankEditProfile from "./pages/BloodBankEditProfile";
 
 function App() {
   return (
@@ -58,6 +62,10 @@ function App() {
 
         <Route path="/bloodbank/dashboard" element={<BloodBankDashboard />} />
         <Route path="/bloodbank/notifications" element={<BloodBankNotifications />} />
+        <Route path="/bloodbank/awards" element={<BloodBankAwardsDashboard />} />
+        <Route path="/bloodbank/donations" element={<BloodBankDonations />} />
+        <Route path="/bloodbank/profile" element={<BloodBankProfile />} />
+        <Route path="/bloodbank/edit-profile" element={<BloodBankEditProfile />} />
       </Routes>
     </Router>
   );

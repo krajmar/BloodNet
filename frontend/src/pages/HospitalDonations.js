@@ -85,12 +85,12 @@ function HospitalDonations(){
                     <span class="status-done">{d.donation_status}</span>
                 </div>
                 <div class="detail-item">
-                    <label>Request Date</label>
+                    <label>Donation Date</label>
                     <p class="date-text">{new Date(d.donation_date).toLocaleDateString()}</p>
                 </div>
                 <div class="card-message">
                     <label>Donor</label>
-                <p>{d.donor_name}</p>
+                <p>{d.donor_name || d.blood_bank_name}</p>
             </div>
             </div>
         </div>
