@@ -1161,3 +1161,33 @@ app.put("/bloodbank/edit-profile/:id", (req, res) => {
     res.json({ message: "Profile updated successfully" });
   });
 });
+
+//Getting the blood bank's blood inventories
+
+app.get("/bloodbank/blood_inventories/:id", (req, res) => {
+  const bloodBankId = req.params.id;
+
+  const sql = `
+    SELECT 
+
+      r.id AS blood_inventory_id,
+      r.blood_type,
+      r.quantity_available AS quantity,
+
+      b.name AS blood_bank_name,
+      b.region
+
+    FROM blood_inventory r
+    JOIN blood_bank b ON r.blood_bank_id = b.id
+
+    WHERE b.id = ?
+  `;
+
+  db.query(sql, [bloodBankId], (err, result) => {
+    if (err){ 
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+    res.json(result);
+  });
+});

@@ -30,6 +30,7 @@ import BloodBankAwardsDashboard from "./pages/BloodBankAwardsDashboard";
 import BloodBankDonations from "./pages/BloodBankDonations";
 import BloodBankProfile from "./pages/BloodBankProfile";
 import BloodBankEditProfile from "./pages/BloodBankEditProfile";
+import BloodBankBloodInventories from "./pages/BloodBankBloodInventories";
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
         <Route path="/bloodbank/donations" element={<BloodBankDonations />} />
         <Route path="/bloodbank/profile" element={<BloodBankProfile />} />
         <Route path="/bloodbank/edit-profile" element={<BloodBankEditProfile />} />
+        <Route path="/bloodbank/blood_inventories" element={<BloodBankBloodInventories />} />
       </Routes>
     </Router>
   );
