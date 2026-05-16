@@ -1191,3 +1191,48 @@ app.get("/bloodbank/blood_inventories/:id", (req, res) => {
     res.json(result);
   });
 });
+
+
+// Get one blood inventory for editing the blood inventories of the blood bank
+app.get("/bloodbank/blood_inventory/:id", (req, res) => {
+
+  const bloodInventoryId = req.params.id;
+
+  const sql = `
+    SELECT *
+    FROM blood_inventory
+    WHERE id = ?
+  `;
+
+  db.query(sql, [bloodInventoryId], (err, result) => {
+    if (err) return res.status(500).json(err);
+
+    res.json(result[0]);
+  });
+});
+
+// Update blood bank's blood inventory
+app.put("/bloodbank/blood_inventory/:id", (req, res) => {
+  const quantity = req.body.quantity_available;
+  const bloodInventoryId = req.params.id;
+
+  const sql = `
+    UPDATE blood_inventory
+    SET quantity_available = ?
+    WHERE id = ?
+  `;
+
+  db.query(
+    sql,
+    [quantity, bloodInventoryId],
+    (err, result) => {
+      if (err){ 
+         console.error("SQL ERROR:", err);
+        return res.status(500).json(err);        
+      }
+      res.json({
+        message: "Blood inventory updated successfully"
+      });
+    }
+  );
+});

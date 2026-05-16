@@ -77,3 +77,14 @@
 .login-btn:active {
   transform: scale(0.98);
 }
+
+.error-box {
+  background: #FFE1DE;
+  color: #b00020;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #ffb3aa;
+}
