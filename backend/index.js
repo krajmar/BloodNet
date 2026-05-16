@@ -6,7 +6,7 @@ const app = express();
 
 //app.use(cors());
 app.use(cors({
-  origin: "http://88.200.63.148:3002",
+  origin: "http://88.200.63.148:3000",
   credentials: true
 }));
 app.use(express.json());
@@ -368,6 +368,20 @@ app.post("/donor/medical_notes/add_medical_note/:id", (req, res) => {
       console.error("SQL ERROR:", err);
       return res.status(500).json(err);
       }
+
+      const statusSql = `UPDATE donor SET eligibility_status = ? WHERE id = ?`;
+      db.query(statusSql,
+    [
+      eligibility_status,
+      donorId
+    ],
+    (err, result) => {
+      if (err){
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+      }
+    });   
+
       res.json({ message: "Medical note inserted successfully" });
     }
   );
@@ -389,6 +403,96 @@ app.get("/donor/awards/:id", (req, res) => {
     }
     res.json(result);
   });
+});
+
+
+// Automatically generate donor awards
+app.get("/donor/check-awards/:id", (req, res) => {
+
+  const donorId = req.params.id;
+
+  const countSql = `
+    SELECT COUNT(*) AS total
+    FROM donation
+    WHERE donor_id = ? AND status = 'Successful'
+  `;
+
+  db.query(countSql, [donorId], (err, result) => {
+
+    if (err) {
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+
+    const totalDonations = result[0].total;
+
+    const awards = [];
+
+if (totalDonations >= 5) {
+  awards.push({
+    name: "Bronze",
+    description: "For the milestone of reaching 5 donations"
+  });
+}
+
+if (totalDonations >= 10) {
+  awards.push({
+    name: "Silver",
+    description: "For the milestone of reaching 10 donations"
+  });
+}
+
+if (totalDonations >= 20) {
+  awards.push({
+    name: "Gold",
+    description: "For the milestone of reaching 20 donations"
+  });
+}
+
+    awards.forEach((award) => {
+
+      const checkSql = `
+        SELECT * FROM award
+        WHERE donor_id = ? AND name = ?
+      `;
+
+      db.query(checkSql, [donorId, award.name], (checkErr, checkResult) => {
+
+        if (checkErr) {
+          console.error(checkErr);
+          return;
+        }
+
+        // Award doesn't exist yet
+        if (checkResult.length === 0) {
+
+          const insertSql = `
+            INSERT INTO award (
+              donor_id,
+              name,
+              description,
+              date_awarded
+            )
+            VALUES (?, ?, ?, CURDATE())
+          `;
+
+          db.query(insertSql, [donorId, award.name, award.description], (insertErr) => {
+
+            if (insertErr) {
+              console.error(insertErr);
+            }
+
+          });
+        }
+      });
+    });
+
+    res.json({
+      message: "Awards checked successfully"
+    });
+
+  });
+
 });
 
 //Getting the donor's notifications
@@ -911,6 +1015,95 @@ app.get("/bloodbank/awards/:id", (req, res) => {
     }
     res.json(result);
   });
+});
+
+// Automatically generate bloodbank awards
+app.get("/bloodbank/check-awards/:id", (req, res) => {
+
+  const bloodBankId = req.params.id;
+
+  const countSql = `
+    SELECT COUNT(*) AS total
+    FROM donation
+    WHERE blood_bank_id = ? AND status = 'Successful'
+  `;
+
+  db.query(countSql, [bloodBankId], (err, result) => {
+
+    if (err) {
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+
+    const totalDonations = result[0].total;
+
+    const awards = [];
+
+if (totalDonations >= 5) {
+  awards.push({
+    name: "Bronze",
+    description: "For the milestone of reaching 5 donations"
+  });
+}
+
+if (totalDonations >= 10) {
+  awards.push({
+    name: "Silver",
+    description: "For the milestone of reaching 10 donations"
+  });
+}
+
+if (totalDonations >= 20) {
+  awards.push({
+    name: "Gold",
+    description: "For the milestone of reaching 20 donations"
+  });
+}
+
+    awards.forEach((award) => {
+
+      const checkSql = `
+        SELECT * FROM award
+        WHERE blood_bank_id = ? AND name = ?
+      `;
+
+      db.query(checkSql, [bloodBankId, award.name], (checkErr, checkResult) => {
+
+        if (checkErr) {
+          console.error(checkErr);
+          return;
+        }
+
+        // Award doesn't exist yet
+        if (checkResult.length === 0) {
+
+          const insertSql = `
+            INSERT INTO award (
+              blood_bank_id,
+              name,
+              description,
+              date_awarded
+            )
+            VALUES (?, ?, ?, CURDATE())
+          `;
+
+          db.query(insertSql, [bloodBankId, award.name, award.description], (insertErr) => {
+
+            if (insertErr) {
+              console.error(insertErr);
+            }
+
+          });
+        }
+      });
+    });
+
+    res.json({
+      message: "Awards checked successfully"
+    });
+
+  });
+
 });
 
 //Getting the Blood bank's donations

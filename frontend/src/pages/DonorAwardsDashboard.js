@@ -29,17 +29,33 @@ function DonorAwardsDashboard(){
     }, []);
 
     useEffect(() => {
+
         if (!user?.id) return;
 
-        axios
-            .get(`http://88.200.63.148:3001/donor/awards/${user.id}`,{
+        axios.get(
+          `http://88.200.63.148:3001/donor/check-awards/${user.id}`,
+          {
+            withCredentials: true
+          }
+        )
+        .then(() => {
+
+          return axios.get(
+            `http://88.200.63.148:3001/donor/awards/${user.id}`,
+            {
               withCredentials: true
-            })
-            .then((res) => {
-            setAwards(res.data);
-            })
-            .catch((err) => console.error(err));
-        }, [user]);
+            }
+          );
+
+        })
+        .then((res) => {
+          setAwards(res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+
+}, [user]);
 
     return(
         <div class="notifications-container">
