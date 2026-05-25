@@ -287,6 +287,55 @@ app.get("/requests/count/:region", (req, res) => {
   });
 });
 
+//Getting the number of total donations of the donor
+app.get("/donor/total_donations/count/:id", (req, res) => {
+  const donorId = req.params.id;
+  const sql = `SELECT COUNT(*) AS count FROM donation WHERE donor_id = ? AND status = 'Successful'`;
+
+  db.query(sql,[donorId], (err, result) => {
+    if (err) {
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+    res.json({ count: result[0].count });
+  });
+});
+
+//Getting the last donation date of the donor
+app.get("/donor/last_donation_date/:id", (req, res) => {
+
+  const donorId = req.params.id;
+
+  const sql = `
+    SELECT donation_date AS last_donation_date
+    FROM donation
+    WHERE donor_id = ? AND status = 'Successful'
+    ORDER BY donation_date DESC
+    LIMIT 1
+  `;
+
+  db.query(sql, [donorId], (err, result) => {
+
+    if (err) {
+      console.error("SQL ERROR:", err);
+      return res.status(500).json(err);
+    }
+
+    // No donations found
+    if (result.length === 0) {
+      return res.json({
+        last_donation_date: null
+      });
+    }
+
+    res.json({
+      last_donation_date: result[0].last_donation_date
+    });
+
+  });
+});
+
+
 //Getting the donor's donations
 
 app.get("/donor/donations/:id", (req, res) => {

@@ -7,6 +7,8 @@ function DonorDashboard() {
 
   //const user = JSON.parse(localStorage.getItem("user"));
   const [numberActiveRequests, setNumberActiveRequests] = useState(-1);
+  const [totalDonations, setTotalDonations] = useState(-1);
+  const [lastDonationDate, setLastDonationDate] = useState(null);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
@@ -26,6 +28,32 @@ function DonorDashboard() {
     });
 
     }, []);
+
+    useEffect(()=>{
+    axios
+    .get(`http://88.200.63.148:30031/donor/total_donations/count/${user?.id}`,{
+        withCredentials: true
+    })
+    .then((res) => {
+      setTotalDonations(res.data.count);
+    })
+    .catch((err) => {
+      console.error(err);
+    });    
+  })
+
+  useEffect(()=>{
+    axios
+    .get(`http://88.200.63.148:30031/donor/last_donation_date/${user?.id}`,{
+        withCredentials: true
+    })
+    .then((res) => {
+      setLastDonationDate(res.data.last_donation_date);
+    })
+    .catch((err) => {
+      console.error(err);
+    });    
+  })
 
   useEffect(() => {
   if (!user?.region) return;
@@ -73,11 +101,11 @@ function DonorDashboard() {
             <div class="stats-grid">
                 <div class="stat-card red-bg">
                     <p class="label">Last Donation</p>
-                    <p class="value">{user?.last_donation_date}</p>
+                    <p class="value">{new Date(lastDonationDate).toLocaleDateString()}</p>
                 </div>
                 <div class="stat-card white-bg">
                     <p class="label muted">Total Donations</p>
-                    <p class="value dark">{user?.total_donations}</p>
+                    <p class="value dark">{totalDonations}</p>
                 </div>
             </div>
 
