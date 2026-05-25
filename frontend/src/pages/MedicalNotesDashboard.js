@@ -14,7 +14,7 @@ function MedicalNotesDashboard(){
   useEffect(() => {
 
     axios.get(
-        "http://88.200.63.148:3001/me",
+        "http://88.200.63.148:30031/me",
         {
         withCredentials: true
         }
@@ -32,7 +32,7 @@ function MedicalNotesDashboard(){
         if (!user?.id) return;
 
         axios
-            .get(`http://88.200.63.148:3001/donor/medical_notes/${user.id}`,{
+            .get(`http://88.200.63.148:30031/donor/medical_notes/${user.id}`,{
               withCredentials: true
             })
             .then((res) => {

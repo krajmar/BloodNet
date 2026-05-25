@@ -13,7 +13,7 @@ function HospitalEditProfile() {
   useEffect(() => {
 
     axios.get(
-        "http://88.200.63.148:3001/me",
+        "http://88.200.63.148:30031/me",
         {
         withCredentials: true
         }
@@ -60,7 +60,7 @@ function HospitalEditProfile() {
 
   setError("");
     try {
-      const res = await axios.put(`http://88.200.63.148:3001/hospital/edit-profile/${user?.id}`, form, {
+      const res = await axios.put(`http://88.200.63.148:30031/hospital/edit-profile/${user?.id}`, form, {
         withCredentials: true,
         });
       alert("Profile updated successfully!");

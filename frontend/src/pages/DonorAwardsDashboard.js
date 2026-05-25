@@ -14,7 +14,7 @@ function DonorAwardsDashboard(){
   useEffect(() => {
 
     axios.get(
-        "http://88.200.63.148:3001/me",
+        "http://88.200.63.148:30031/me",
         {
         withCredentials: true
         }
@@ -33,7 +33,7 @@ function DonorAwardsDashboard(){
         if (!user?.id) return;
 
         axios.get(
-          `http://88.200.63.148:3001/donor/check-awards/${user.id}`,
+          `http://88.200.63.148:30031/donor/check-awards/${user.id}`,
           {
             withCredentials: true
           }
@@ -41,7 +41,7 @@ function DonorAwardsDashboard(){
         .then(() => {
 
           return axios.get(
-            `http://88.200.63.148:3001/donor/awards/${user.id}`,
+            `http://88.200.63.148:30031/donor/awards/${user.id}`,
             {
               withCredentials: true
             }

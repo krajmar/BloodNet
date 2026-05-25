@@ -19,7 +19,7 @@ function RegisterHospital() {
   const submit = async () => {
     try {
       await axios.post(
-        "http://88.200.63.148:3001/register/hospital",
+        "http://88.200.63.148:30031/register/hospital",
         {
         withCredentials: true,
         form

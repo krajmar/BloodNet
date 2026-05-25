@@ -14,7 +14,7 @@ function HospitalDashboard() {
   useEffect(() => {
 
     axios.get(
-        "http://88.200.63.148:3001/me",
+        "http://88.200.63.148:30031/me",
         {
         withCredentials: true
         }
@@ -30,7 +30,7 @@ function HospitalDashboard() {
 
   useEffect(()=>{
     axios
-    .get(`http://88.200.63.148:3001/hospital/active_requests/count/${user?.id}`,{
+    .get(`http://88.200.63.148:30031/hospital/active_requests/count/${user?.id}`,{
         withCredentials: true
     })
     .then((res) => {
@@ -43,7 +43,7 @@ function HospitalDashboard() {
 
   useEffect(()=>{
     axios
-    .get(`http://88.200.63.148:3001/hospital/last_request/${user?.id}`,{
+    .get(`http://88.200.63.148:30031/hospital/last_request/${user?.id}`,{
         withCredentials: true
     })
     .then((res) => {

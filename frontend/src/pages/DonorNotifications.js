@@ -13,7 +13,7 @@ function DonorNotifications(){
   useEffect(() => {
 
     axios.get(
-        "http://88.200.63.148:3001/me",
+        "http://88.200.63.148:30031/me",
         {
         withCredentials: true
         }
@@ -31,7 +31,7 @@ function DonorNotifications(){
         if (!user?.id) return;
 
         axios
-            .get(`http://88.200.63.148:3001/donor/notifications/${user.id}`, {
+            .get(`http://88.200.63.148:30031/donor/notifications/${user.id}`, {
             withCredentials: true,    
             params: {
                 blood_type: user.blood_type,

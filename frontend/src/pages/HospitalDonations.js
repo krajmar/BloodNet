@@ -13,7 +13,7 @@ function HospitalDonations(){
   useEffect(() => {
 
     axios.get(
-        "http://88.200.63.148:3001/me",
+        "http://88.200.63.148:30031/me",
         {
         withCredentials: true
         }
@@ -31,7 +31,7 @@ function HospitalDonations(){
         if (!user?.id) return;
 
         axios
-            .get(`http://88.200.63.148:3001/hospital/donations/${user.id}`,{
+            .get(`http://88.200.63.148:30031/hospital/donations/${user.id}`,{
                 withCredentials: true
             })
             .then((res) => {

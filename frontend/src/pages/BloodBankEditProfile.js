@@ -13,7 +13,7 @@ function BloodBankEditProfile() {
   useEffect(() => {
 
     axios.get(
-        "http://88.200.63.148:3001/me",
+        "http://88.200.63.148:30031/me",
         {
         withCredentials: true
         }
@@ -61,7 +61,7 @@ function BloodBankEditProfile() {
 
   setError("");
     try {
-      const res = await axios.put(`http://88.200.63.148:3001/bloodbank/edit-profile/${user?.id}`, form, {
+      const res = await axios.put(`http://88.200.63.148:30031/bloodbank/edit-profile/${user?.id}`, form, {
         withCredentials: true,
         });
       alert("Profile updated successfully!");

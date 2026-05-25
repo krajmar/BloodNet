@@ -13,7 +13,7 @@ function DonorDonations(){
   useEffect(() => {
 
     axios.get(
-        "http://88.200.63.148:3001/me",
+        "http://88.200.63.148:30031/me",
         {
         withCredentials: true
         }
@@ -30,7 +30,7 @@ function DonorDonations(){
     useEffect(() => {
         if (!user?.id) return;
 
-        axios.get(`http://88.200.63.148:3001/donor/donations/${user.id}`,{
+        axios.get(`http://88.200.63.148:30031/donor/donations/${user.id}`,{
                 withCredentials: true
             })
             .then((res) => {

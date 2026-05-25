@@ -20,7 +20,7 @@ function RegisterBloodBank() {
   const submit = async () => {
     try {
       await axios.post(
-        "http://88.200.63.148:3001/register/bloodbank", {
+        "http://88.200.63.148:30031/register/bloodbank", {
         withCredentials: true,
         form
         }

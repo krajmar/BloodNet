@@ -13,7 +13,7 @@ function DonorEditProfile() {
   useEffect(() => {
 
     axios.get(
-        "http://88.200.63.148:3001/me",
+        "http://88.200.63.148:30031/me",
         {
         withCredentials: true
         }
@@ -58,7 +58,7 @@ function DonorEditProfile() {
 
   setError("");
     try {
-      const res = await axios.put(`http://88.200.63.148:3001/donor/edit-profile/${user?.id}`, form, {
+      const res = await axios.put(`http://88.200.63.148:30031/donor/edit-profile/${user?.id}`, form, {
         withCredentials: true,
         });
       alert("Profile updated successfully!");

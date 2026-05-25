@@ -13,7 +13,7 @@ function HospitalCreateRequest() {
   useEffect(() => {
 
     axios.get(
-        "http://88.200.63.148:3001/me",
+        "http://88.200.63.148:30031/me",
         {
         withCredentials: true
         }
@@ -41,7 +41,7 @@ function HospitalCreateRequest() {
   const submit = async () => {
     try {
       await axios.post(
-        `http://88.200.63.148:3001/hospital/requests/create-request/${user?.id}`, 
+        `http://88.200.63.148:30031/hospital/requests/create-request/${user?.id}`, 
             {
                 withCredentials: true,
                 blood_type: form.blood_type,

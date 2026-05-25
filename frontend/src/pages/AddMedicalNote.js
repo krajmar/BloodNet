@@ -19,7 +19,7 @@ function AddMedicalNote() {
   useEffect(() => {
 
     axios.get(
-        "http://88.200.63.148:3001/me",
+        "http://88.200.63.148:30031/me",
         {
         withCredentials: true
         }
@@ -47,7 +47,7 @@ function AddMedicalNote() {
 
   try {
     await axios.post(
-      `http://88.200.63.148:3001/donor/medical_notes/add_medical_note/${user?.id}`,
+      `http://88.200.63.148:30031/donor/medical_notes/add_medical_note/${user?.id}`,
       form,{
         withCredentials: true
       }

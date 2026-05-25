@@ -6,7 +6,7 @@ const app = express();
 
 //app.use(cors());
 app.use(cors({
-  origin: "http://88.200.63.148:3000",
+  origin: "http://88.200.63.148:30032",
   credentials: true
 }));
 app.use(express.json());
@@ -17,8 +17,8 @@ app.get("/", (req, res) => {
   res.send("BloodNet API running");
 });
 
-app.listen(3001, () => {
-  console.log("Server running on port 3001");
+app.listen(30031, "0.0.0.0", () => {
+  console.log("Server running on port 30031");
 });
 
 app.get("/test-db", (req, res) => {

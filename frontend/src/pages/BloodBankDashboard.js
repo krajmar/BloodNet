@@ -32,7 +32,7 @@ function BloodBankDashboard() {
   useEffect(()=>{
     if(!user?.region) return;
     axios
-    .get(`http://88.200.63.148:3001/bloodbank/requests/count/${user?.region}`,{
+    .get(`http://88.200.63.148:30031/bloodbank/requests/count/${user?.region}`,{
         withCredentials: true
     })
     .then((res) => {
@@ -46,7 +46,7 @@ function BloodBankDashboard() {
   useEffect(()=>{
     if(!user?.id) return;
     axios
-    .get(`http://88.200.63.148:3001/bloodbank/last_donation/${user?.id}`,{
+    .get(`http://88.200.63.148:30031/bloodbank/last_donation/${user?.id}`,{
         withCredentials: true
     })
     .then((res) => {
@@ -60,7 +60,7 @@ function BloodBankDashboard() {
   useEffect(()=>{
     if(!user?.id) return;
     axios
-    .get(`http://88.200.63.148:3001/bloodbank/total_donations/${user?.id}`,{
+    .get(`http://88.200.63.148:30031/bloodbank/total_donations/${user?.id}`,{
         withCredentials: true
     })
     .then((res) => {
