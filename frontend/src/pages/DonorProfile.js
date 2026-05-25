@@ -7,6 +7,7 @@ function DonorProfile() {
   const navigate = useNavigate();
   //const user = JSON.parse(localStorage.getItem("user"));
   const [user, setUser] = useState(null);
+  const [lastDonationDate, setLastDonationDate] = useState(null);
 
   useEffect(() => {
 
@@ -24,6 +25,19 @@ function DonorProfile() {
     });
 
     }, []);
+
+    useEffect(()=>{
+    axios
+    .get(`http://88.200.63.148:30031/donor/last_donation_date/${user?.id}`,{
+        withCredentials: true
+    })
+    .then((res) => {
+      setLastDonationDate(res.data.last_donation_date);
+    })
+    .catch((err) => {
+      console.error(err);
+    });    
+  })
 
   const isEligible = user?.eligibility_status === "True";
 
@@ -54,7 +68,7 @@ function DonorProfile() {
           <div className="info-row"><span>Region</span><p>{user?.region}</p></div>
           <div className="info-row"><span>Email</span><p>{user?.email}</p></div>
           <div className="info-row"><span>Phone</span><p>{user?.phone}</p></div>
-          <div className="info-row last-donation"><span>Last Donation</span><p>{new Date(user?.last_donation_date).toLocaleDateString()}</p></div>
+          <div className="info-row last-donation"><span>Last Donation</span><p>{new Date(lastDonationDate).toLocaleDateString()}</p></div>
         </div>
 
         <button className="edit-btn" onClick={() => navigate('/donor/edit-profile')}>

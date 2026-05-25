@@ -66,6 +66,7 @@ app.post("/register/donor", (req, res) => {
     ],
     (err, result) => {
       if (err){
+        console.error("SQL ERROR:", err);
       return res.status(500).json(err);
       }
       res.json({ message: "Donor registered successfully" });
