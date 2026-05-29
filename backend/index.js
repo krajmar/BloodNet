@@ -571,10 +571,10 @@ app.get("/donor/notifications/:id", (req, res) => {
     JOIN blood_request r ON n.request_id = r.id
     JOIN hospital h ON r.hospital_id = h.id
 
-    WHERE r.blood_type = ? AND r.region = ? AND r.status = 'Sent' 
+    WHERE r.blood_type = ? AND r.region = ? AND n.recipient_donor_id = ? AND r.status = 'Sent' 
   `;
 
-  db.query(sql, [bloodType, donorRegion], (err, result) => {
+  db.query(sql, [bloodType, donorRegion, donorId], (err, result) => {
     if (err){ 
       console.error("SQL ERROR:", err);
       return res.status(500).json(err);
@@ -1037,10 +1037,10 @@ app.get("/bloodbank/notifications/:id", (req, res) => {
     JOIN blood_request r ON n.request_id = r.id
     JOIN hospital h ON r.hospital_id = h.id
 
-    WHERE r.region = ? AND r.status = 'Sent' 
+    WHERE r.region = ? AND n.recipient_blood_bank_id = ? AND r.status = 'Sent' 
   `;
 
-  db.query(sql, [bloodBankRegion], (err, result) => {
+  db.query(sql, [bloodBankRegion, bloodBankId], (err, result) => {
     if (err){ 
       console.error("SQL ERROR:", err);
       return res.status(500).json(err);
