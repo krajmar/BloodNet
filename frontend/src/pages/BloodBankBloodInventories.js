@@ -41,36 +41,36 @@ function BloodBankBloodInventories(){
         }, [user?.id]);
 
     return(
-        <div class="notifications-container">
-    <header class="page-header">
-        <button class="back-btn" onClick={()=>navigate('/bloodbank/dashboard')}>
+        <div className="notifications-container">
+    <header className="page-header">
+        <button className="back-btn" onClick={()=>navigate('/bloodbank/dashboard')}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
         <h1>Blood Inventories</h1>
     </header>
 
-    <main class="notifications-list">
+    <main className="notifications-list">
         
         {completedRequests.map((c) => (
-            <div class="notification-card-req urgent">
-            <div class="card-header">
-                <div class="hospital-meta">
+            <div className="notification-card-req urgent">
+            <div className="card-header">
+                <div className="hospital-meta">
                     <h2>{c.blood_bank_name}</h2>
-                    <p class="location-tag">
+                    <p className="location-tag">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                         {c.region}
                     </p>
                 </div>
-                <div class="blood-type-square high-urgency">
-                    <span class="type-label">TYPE</span>
-                    <span class="type-value">{c.blood_type}</span>
+                <div className="blood-type-square high-urgency">
+                    <span className="type-label">TYPE</span>
+                    <span className="type-value">{c.blood_type}</span>
                 </div>
             </div>
 
-            <div class="details-grid">
-                <div class="detail-item">
+            <div className="details-grid">
+                <div className="detail-item">
                     <label>Quantity</label>
-                    <p class="urgency-text">{c.quantity}</p>
+                    <p className="urgency-text">{c.quantity}</p>
                 </div>
             </div>
             <button className="edit-btn" onClick={() => navigate(`/bloodbank/blood_inventories/edit-blood-inventory/${c.blood_inventory_id}`)}>
@@ -83,26 +83,26 @@ function BloodBankBloodInventories(){
 
     </main>
 
-    <nav class="bottom-menu">
-        <div class="menu-item inactive">
+    <nav className="bottom-menu">
+        <div className="menu-item inactive">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             <span>Home</span>
         </div>
-        <div class="menu-item active">
+        <div className="menu-item active">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="#880808" stroke="#880808" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon></svg>
             <span>Requests</span>
         </div>
-        <div class="menu-item inactive">
+        <div className="menu-item inactive">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             <span>History</span>
         </div>
-        <div class="menu-item inactive">
+        <div className="menu-item inactive">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             <span>Account</span>
         </div>
     </nav>
 
-    <div class="home-bar"></div>
+    <div className="home-bar"></div>
 </div>
     )
 }
